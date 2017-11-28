@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <cstring>
 using namespace std;
 int main()
 {
@@ -12,12 +13,12 @@ int main()
 	{
 		fin.getline(buff, 50);
 		char* tmp = buff;
-		int *mas = new int[];
+		int *mas = new int[50];
 		for (int i = 0; i<50; i++)
 		{
 			int a = atoi(tmp);
-			int index = find(tmp, ' ');
-			tmp = tmp + index + 1;
+			
+			tmp = strchr(tmp, ' ') + 1;
 			for (int i = 0; i<50; i++)
 			{
 
@@ -28,5 +29,8 @@ int main()
 
 	ofstream fout;
 	fout.open("OUTPUT.TXT");
+
+	fin.close();
+	fout.close();
 	return 0;
 }
