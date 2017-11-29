@@ -6,7 +6,9 @@ int main()
 {
 	char buff[50];
 	ifstream fin("INPUT.TXT");
-
+	ofstream fout;
+	fout.open("OUTPUT.TXT");
+	int count = 0;
 	if (!fin)
 		cout<<"404";
 	else
@@ -17,19 +19,17 @@ int main()
 		for (int i = 0; i<50; i++)
 		{
 			int a = atoi(tmp);
-			
+			fout << a << " ";
+			if (a == 0)
+			count++;
+			if (!strchr(tmp, ' '))
+					break;
 			tmp = strchr(tmp, ' ') + 1;
-			for (int i = 0; i<50; i++)
-			{
-
-			}
 		}
 
 	}
 
-	ofstream fout;
-	fout.open("OUTPUT.TXT");
-
+	fout << count;
 	fin.close();
 	fout.close();
 	return 0;
