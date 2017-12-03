@@ -16,7 +16,7 @@ int main()
 	fout.open("OUTPUT.TXT");
 	int count = 0;
 	if (!fin)
-		cout<<"404";
+		cout<<"Not Found";
 	else
 	{
 		fin.getline(buff, 50);
