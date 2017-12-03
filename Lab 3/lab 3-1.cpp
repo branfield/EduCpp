@@ -1,3 +1,9 @@
+/* 10 вариант.
+В текстовом файле INPUT.TXT записаны целые числа через пробел, возможно, в несколько строк. 
+За один просмотр файла сформировать список этих чисел. Определить количество
+нулевых элементов в списке. Найденное число вставить в конец исходного списка. 
+Полученный список занести в текстовый файл OUTPUT.TXT. */
+
 #include <iostream>
 #include <fstream>
 #include <cstring>
@@ -6,9 +12,11 @@ int main()
 {
 	char buff[50];
 	ifstream fin("INPUT.TXT");
-
+	ofstream fout;
+	fout.open("OUTPUT.TXT");
+	int count = 0;
 	if (!fin)
-		cout<<"404";
+		cout<<"Not Found";
 	else
 	{
 		fin.getline(buff, 50);
@@ -17,19 +25,17 @@ int main()
 		for (int i = 0; i<50; i++)
 		{
 			int a = atoi(tmp);
-			
+			fout << a << " ";
+			if (a == 0)
+			count++;
+			if (!strchr(tmp, ' '))
+					break;
 			tmp = strchr(tmp, ' ') + 1;
-			for (int i = 0; i<50; i++)
-			{
-
-			}
 		}
 
 	}
 
-	ofstream fout;
-	fout.open("OUTPUT.TXT");
-
+	fout << count;
 	fin.close();
 	fout.close();
 	return 0;
