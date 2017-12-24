@@ -1,3 +1,11 @@
+/* Вариант 1
+Дан файл INPUT.txt. В нем записаны данные работников компании: ФИО, год рождения и зарплата. 
+За один просмотр файла найдите ФИО и возраст самого высокооплачиваемого работника, который младше 35 лет. 
+Ответ выведите в файл OUTPUT.txt 
+Примечание: Возраст это разница текущего года 2017 и года рождения. */
+
+//В ПРОЦЕССЕ//
+
 #include <iostream>
 #include <fstream>
 #include <clocale>
@@ -9,12 +17,12 @@ int main()
 	ofstream fout("OUTPUT.TXT");
 	int* mas = new int [255]; 
 	if (!fin)
-		cout<<"Not Found";
+		cout << "Not Found";
 	else
 	{
 		fin.getline(buff, 255);
 		char* buff = new char[255];
-	    for (int i = 0; !fin.eof(); i++)
+	    	for (int i = 0; !fin.eof(); i++)
 		{
 			fin >> buff[i];
 		}
