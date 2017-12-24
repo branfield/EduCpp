@@ -1,4 +1,5 @@
-﻿#include <iostream>  
+﻿#include <iostream> 
+#include <cmath> 
 using namespace std;
 int main()
 {
@@ -13,46 +14,25 @@ int main()
 		cin >> mas[i];
 	}
 
-	int max, min;
-	max = mas[0];
-	min = mas[0];
+	int k = 0, l = 0;
+	for (i = 0; i < n; i++)
+	{
+		if (a[i] == a[i + 1])
+			k++;
+	}
 
 	for (i = 0; i < n; i++)
 	{
-		if (mas[i] < min)
-			min = mas[i];
-		if (mas[i] > max)
-			max = mas[i];
-	}
-
-	int k;
-	k = n;
-
-	for (i = 0; i < n; i++)
-	{
-		if (mas[i] == max)
-			k--;
-	}
-
-	int j = 0;
-
-	int *mas1 = new int[k];
-	for (j = 0; j < n; j++)
-	{
-		for (i = 0; i < n; i++)
+		for (i = 0; i < n - 1; i++)
 		{
-			if (mas[i] != max)
-				mas1[j] = mas[i];
-			else
-				mas1[j] = mas[i + 1];
+			if (a[i] == a[i + 1])
+				k++;
 		}
+		if (k > l)
+			l = k;
 	}
 
-	for (j = 0; j < k; j++)
-	{
-		cout << mas1[j] << " ";
-	}
-
+	cout << l;
 	system("pause");
 	return 0;
 }

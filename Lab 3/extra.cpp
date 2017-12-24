@@ -18,6 +18,11 @@ int main()
 		{
 			fin >> buff[i];
 		}
+		int a = atoi(tmp);
+		if (!strchr(tmp, ';'))
+					break;
+			tmp = strchr(tmp, ' ') + 1;
+		
 		
 		
 		

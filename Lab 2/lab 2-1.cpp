@@ -1,3 +1,5 @@
+﻿//создаем два массива. один для ввода переменных, второй для сравнения длин. находим максимальную и выводим.
+
 #include <iostream> 
 #include <cmath> 
 using namespace std;
@@ -6,39 +8,33 @@ int main()
 	int n;
 	cout << "Enter n = ";
 	cin >> n;
-	float *mas = new float[n];
-	float sum = 0;
+	int *mas = new int[n];
 	int i = 0;
+
 	for (i = 0; i < n; i++)
 	{
 		cin >> mas[i];
-		sum = sum + mas[i];
 	}
 
-	int sr;
-	sr = sum / n;
-	int min, k;
-	min = mas[1];
+	int k = 0, l = 0;
 	for (i = 0; i < n; i++)
 	{
-		if (mas[i] < min)
-		{
-			min = mas[i];
-			k = i;
-			mas[k] = sr;
-		}
-
-		if (mas[i] == min)
-		{
-			mas[0] = sr;
-			mas[n] = sr;
-		}
+		if (a[i] == a[i + 1])
+			k++;
 	}
 
 	for (i = 0; i < n; i++)
 	{
-		cout << mas[i] << " ";
+		for (i = 0; i < n - 1; i++)
+		{
+			if (a[i] == a[i + 1])
+				k++;
+		}
+		if (k > l)
+			l = k;
 	}
+
+	cout << l;
 	system("pause");
 	return 0;
 }
