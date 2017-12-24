@@ -33,7 +33,7 @@ int main()
 	setlocale(0, "");
 	aeroflot *mas = new aeroflot[7];
 	int n = 0;
-	for (n = 0;n<7;n++)
+	for (n = 0; n < 7; n++)
 	{
 		cout << "ВНИМАНИЕ!" << endl << "Для завершения ввода не забудьте поставить точку!" << endl;
 		cout << "Введите название пункта назначения: ";
@@ -46,10 +46,10 @@ int main()
 
 		cout << "Введите тип самолета: ";
 		cin >> mas[n].type;
-		n++;
+		n ++;
 	}
-	n++;
-	cout << "\n Введите название пункта назначения: ";
+	n ++;
+	cout << endl << "Введите название пункта назначения: ";
 	char *name2 = new char[50];
 	cin >> name2;
 	bool c = 0;
