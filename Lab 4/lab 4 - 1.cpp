@@ -91,6 +91,7 @@ int main()
 	for (int i = 0; i < n; i++)
 	{
 		if (!strcmp(name2, mas[i].name)) //сравниваем две строки. если строки равны, то происходит вывод
+						//(*mas[i].name == *name2) - программа сравнивала только первые символы
 		{
 			c = 1;
 			cout << mas[i].name << " " << mas[i].number << " " << mas[i].type << endl;
