@@ -104,6 +104,20 @@ public:
 		int y4 = y2;
 		cout << "Действие требует дополнительного ввода значений" << endl;
 		constructor();
+		if (x3 > x1)
+		{
+			x1 = x1;
+			y1 = y1;
+			x2 = x4;
+			y2 = y4;
+		}
+		else
+		{
+			x1 = x3;
+			y1 = y3;
+			x2 = x2;
+			y2 = y2;
+		}
 	}
 
 	void leastUnion()
