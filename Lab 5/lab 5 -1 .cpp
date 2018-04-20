@@ -106,8 +106,6 @@ public:
 		constructor();
 		if (x3 > x1)
 		{
-			x1 = x1;
-			y1 = y1;
 			x2 = x4;
 			y2 = y4;
 		}
@@ -115,8 +113,6 @@ public:
 		{
 			x1 = x3;
 			y1 = y3;
-			x2 = x2;
-			y2 = y2;
 		}
 	}
 
