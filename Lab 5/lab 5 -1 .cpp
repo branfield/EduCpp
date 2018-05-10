@@ -1,170 +1,160 @@
-ï»¿#include <iostream>
+#include <iostream>
 #include <windows.h>
 using namespace std;
 
-class Rectangles
+class Rect
 {
-public:
+
 	int x1, y1, x2, y2;
 
-	void constructor()
-	{
-		cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ ÐºÐ¾Ð¾Ñ€Ð´Ð¸Ð½Ð°Ñ‚Ñ‹ Ð²ÐµÑ€Ñ…Ð½ÐµÐ¹ Ð»ÐµÐ²Ð¾Ð¹ Ñ‚Ð¾Ñ‡ÐºÐ¸: " << endl;
-		cout << "Ð°Ð±ÑÑ†Ð¸ÑÑÐ° = ";
-		cin >> x1;
-		cout << "Ð¾Ñ€Ð´Ð¸Ð½Ð°Ñ‚Ð° = ";
-		cin >> y1;
+public:
 
-		cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ ÐºÐ¾Ð¾Ñ€Ð´Ð¸Ð½Ð°Ñ‚Ñ‹ Ð½Ð¸Ð¶Ð½ÐµÐ¹ Ð¿Ñ€Ð°Ð²Ð¾Ð¹ Ñ‚Ð¾Ñ‡ÐºÐ¸: " << endl;
-		cout << "Ð°Ð±ÑÑ†Ð¸ÑÑÐ° = ";
-		cin >> x2;
-		cout << "Ð¾Ñ€Ð´Ð¸Ð½Ð°Ñ‚Ð° = ";
-		cin >> y2;
+	Rect(int abs1, int ord1, int abs2, int ord2)
+	{
+		this->x1 = abs1;
+		this->y1 = ord1;
+		this->x2 = abs2;
+		this->y2 = ord2;
 	}
 
-	void move()
+	void size(int input, int multiplier)
 	{
-		int input = 0, addendum = 0;
-		bool flag = false;
-		while (!flag)
-		{
-			cout << "ÐŸÐ¾ ÐºÐ°ÐºÐ¾Ð¹ Ð¾ÑÐ¸ Ð’Ñ‹ Ñ…Ð¾Ñ‚Ð¸Ñ‚Ðµ ÑÐ´Ð²Ð¸Ð½ÑƒÑ‚ÑŒ Ñ„Ð¸Ð³ÑƒÑ€Ñƒ? " << endl;
-			cout << "(1) â€” Ð¿Ð¾ Ð¾ÑÐ¸ Ð°Ð±ÑÑ†Ð¸ÑÑ" << endl << "(2) â€” Ð¿Ð¾ Ð¾ÑÐ¸ Ð¾Ñ€Ð´Ð¸Ð½Ð°Ñ‚" << endl << "(3) â€” Ð¾ÐºÐ¾Ð½Ñ‡Ð°Ð½Ð¸Ðµ Ð¿Ñ€Ð¾Ñ†ÐµÑÑÐ°" << endl;
-			cin >> input;
-			switch (input)
-			{
-			case 1:
-				cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ðµ, Ð½Ð° ÐºÐ¾Ñ‚Ð¾Ñ€Ð¾Ðµ Ð’Ñ‹ Ñ…Ð¾Ñ‚Ð¸Ñ‚Ðµ ÑÐ´Ð²Ð¸Ð½ÑƒÑ‚ÑŒ Ñ„Ð¸Ð³ÑƒÑ€Ñƒ: ";
-				cin >> addendum;
-				x1 += addendum;
-				x2 += addendum;
-				break;
-
-			case 2:
-				cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ðµ, Ð½Ð° ÐºÐ¾Ñ‚Ð¾Ñ€Ð¾Ðµ Ð’Ñ‹ Ñ…Ð¾Ñ‚Ð¸Ñ‚Ðµ ÑÐ´Ð²Ð¸Ð½ÑƒÑ‚ÑŒ Ñ„Ð¸Ð³ÑƒÑ€Ñƒ: ";
-				cin >> addendum;
-				y1 += addendum;
-				y2 += addendum;
-				break;
-
-			case 3:
-				flag = true;
-				break;
-
-			default:
-				cout << "ÐžÑˆÐ¸Ð±ÐºÐ°!" << endl << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ðµ Ð¾Ñ‚ 1 Ð´Ð¾ 3!" << endl;
-			}
-		}
+	
 	}
 
-	void size()
+	void move(int s1, int s2)
 	{
-		bool flag = false;
-		while (!flag)
-		{
-			cout << "Ð’Ñ‹Ð±ÐµÑ€Ð¸Ñ‚Ðµ Ð½ÑƒÐ¶Ð½Ð¾Ðµ Ð´ÐµÐ¹ÑÑ‚Ð²Ð¸Ðµ Ð´Ð»Ñ Ð¿Ñ€Ð¾Ð´Ð¾Ð»Ð¶ÐµÐ½Ð¸Ñ" << endl;
-			cout << "(1) â€” ÑƒÐ²ÐµÐ»Ð¸Ñ‡Ð¸Ñ‚ÑŒ" << endl << "(2) â€” ÑƒÐ¼ÐµÐ½ÑŒÑˆÐ¸Ñ‚ÑŒ" << endl << "(3) â€” Ð²Ñ‹Ñ…Ð¾Ð´ Ð² Ð¼ÐµÐ½ÑŽ" << endl;
-			int input = 0, multiplier = 0;
-			cin >> input;
-			switch (input)
-			{
-			case 1:
-				cout << "Ð’Ð¾ ÑÐºÐ¾Ð»ÑŒÐºÐ¾ Ñ€Ð°Ð· Ð’Ñ‹ Ñ…Ð¾Ñ‚Ð¸Ñ‚Ðµ ÑƒÐ²ÐµÐ»Ð¸Ñ‡Ð¸Ñ‚ÑŒ Ñ„Ð¸Ð³ÑƒÑ€Ñƒ?" << endl;
-				cin >> multiplier;
-				x1 *= multiplier;
-				x2 *= multiplier;
-				y1 *= multiplier;
-				y2 *= multiplier;
-				break;
 
-			case 2:
-				cout << "Ð’Ð¾ ÑÐºÐ¾Ð»ÑŒÐºÐ¾ Ñ€Ð°Ð· Ð’Ñ‹ Ñ…Ð¾Ñ‚Ð¸Ñ‚Ðµ ÑƒÐ¼ÐµÐ½ÑŒÑˆÐ¸Ñ‚ÑŒ Ñ„Ð¸Ð³ÑƒÑ€Ñƒ?" << endl;
-				cin >> multiplier;
-				x1 /= multiplier;
-				x2 /= multiplier;
-				y1 /= multiplier;
-				y2 /= multiplier;
-				break;
-
-			case 3:
-				flag = true;
-				break;
-
-			default:
-				cout << "ÐžÑˆÐ¸Ð±ÐºÐ°!" << endl << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ðµ Ð¾Ñ‚ 1 Ð´Ð¾ 3!" << endl;
-			}
-		}
 	}
 
 	void connection()
 	{
-		int x3 = x1;
-		int y3 = y1;
-		int x4 = x2;
-		int y4 = y2;
-		cout << "Ð”ÐµÐ¹ÑÑ‚Ð²Ð¸Ðµ Ñ‚Ñ€ÐµÐ±ÑƒÐµÑ‚ Ð´Ð¾Ð¿Ð¾Ð»Ð½Ð¸Ñ‚ÐµÐ»ÑŒÐ½Ð¾Ð³Ð¾ Ð²Ð²Ð¾Ð´Ð° Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ð¹" << endl;
-		constructor();
+
 	}
 
 	void leastUnion()
 	{
-		int x3 = x1;
-		int y3 = y1;
-		int x4 = x2;
-		int y4 = y2;
-		cout << "Ð”ÐµÐ¹ÑÑ‚Ð²Ð¸Ðµ Ñ‚Ñ€ÐµÐ±ÑƒÐµÑ‚ Ð´Ð¾Ð¿Ð¾Ð»Ð½Ð¸Ñ‚ÐµÐ»ÑŒÐ½Ð¾Ð³Ð¾ Ð²Ð²Ð¾Ð´Ð° Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ð¹" << endl;
-		constructor();
+
 	}
 
-	void output()
+	~Rect()
 	{
-		cout << endl << "ÐŸÐ¾Ð»ÑƒÑ‡ÐµÐ½Ð½Ñ‹Ðµ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ñ:" << endl;
-		cout << "Ð°Ð±ÑÑ†Ð¸ÑÑÐ° Ð²ÐµÑ€Ñ…Ð½ÐµÐ¹ Ð»ÐµÐ²Ð¾Ð¹ Ñ‚Ð¾Ñ‡ÐºÐ¸ = " << x1 << endl;
-		cout << "Ð¾Ñ€Ð´Ð¸Ð½Ð°Ñ‚Ð° Ð²ÐµÑ€Ñ…Ð½ÐµÐ¹ Ð»ÐµÐ²Ð¾Ð¹ Ñ‚Ð¾Ñ‡ÐºÐ¸ = " << y1 << endl;
-		cout << "Ð°Ð±ÑÑ†Ð¸ÑÑÐ° Ð½Ð¸Ð¶Ð½ÐµÐ¹ Ð¿Ñ€Ð°Ð²Ð¾Ð¹ Ñ‚Ð¾Ñ‡ÐºÐ¸ = " << x2 << endl;
-		cout << "Ð¾Ñ€Ð´Ð¸Ð½Ð°Ñ‚Ð° Ð½Ð¸Ð¶Ð½ÐµÐ¹ Ð¿Ñ€Ð°Ð²Ð¾Ð¹ Ñ‚Ð¾Ñ‡ÐºÐ¸ = " << y2 << endl;
 	}
 };
+
+
+int FoolProtection(char* buff = new char)
+{
+	bool flag = true;
+	while (true)
+	{
+		bool normal = true;
+		for (int i = 0; i < strlen(buff); i++)
+		{
+			if (buff[i] < '0' || buff[i] > '9')
+			{
+				normal = false;
+				break;
+			}
+		}
+
+		if (!normal)
+		{
+			cout << "Îøèáêà ââîäà. Ââåäèòå ÷èñëî. " << endl;
+			break;
+		}
+		else
+		{
+			return atoi(buff);
+			return 0;
+			flag = false;
+			break;
+		}
+	}
+} 
 
 int main()
 {
 	setlocale(0, "");
-	Rectangles program;
-	program.constructor();
+	char* x1 = new char;
+	char* y1 = new char;
+	char* x2 = new char;
+	char* y2 = new char;
+	int a = 0;
+	bool condition = false;
+	while (!condition)
+	{
+		cout << "Ââåäèòå êîîðäèíàòû ïðÿìîóãîëüíèêà" << endl << "Êîîðäèíàòû âåðõíåé òî÷êè: " << endl;
+		while (1)
+		{
+			cout << "x = ";
+			cin >> x1;
+			FoolProtection(x1);
+			if (!FoolProtection)
+				break;
+		}
+		while (a != 1)
+		{
+			cout << "y = ";
+			cin >> y1;
+			FoolProtection(x1);
+		}
+		FoolProtection(y1);
+		cout << endl << "Êîîðäèíàòû íèæíåé òî÷êè: " << endl << "x = ";
+		cin >> x2;
+		FoolProtection(x2);
+		cout << "y = ";
+		cin >> y2;
+		FoolProtection(y2);
+		int height = 0, widht = 0;
+		height = y1 - y2;
+		widht = x2 - x1;
+		if ((height <= 0) || (widht <= 0)) cout << "Íåêêîðåêòíûå çíà÷åíèÿ. Ïîâòîðèòå ââîä." << endl;
+		else condition = true;
+	}
+
+	//Rect program(x1, y1, x2, y2);
+
 	bool flag = false;
 	while (!flag)
 	{
-		cout << endl << endl << "Ð’Ñ‹Ð±ÐµÑ€Ð¸Ñ‚Ðµ Ð½ÑƒÐ¶Ð½Ð¾Ðµ Ð´ÐµÐ¹ÑÑ‚Ð²Ð¸Ðµ: " << endl;
-		cout << "(1) â€” Ð¿ÐµÑ€ÐµÐ¼ÐµÑ‰ÐµÐ½Ð¸Ðµ Ñ„Ð¸Ð³ÑƒÑ€Ñ‹ Ð½Ð° Ð¿Ð»Ð¾ÑÐºÐ¾ÑÑ‚Ð¸" << endl;
-		cout << "(2) â€” Ð¸Ð·Ð¼ÐµÐ½ÐµÐ½Ð¸Ðµ Ñ€Ð°Ð·Ð¼ÐµÑ€Ð° Ñ„Ð¸Ð³ÑƒÑ€Ñ‹" << endl;
-		cout << "(3) â€” Ð¿Ð¾ÑÑ‚Ñ€Ð¾ÐµÐ½Ð¸Ðµ Ð½Ð°Ð¸Ð¼ÐµÐ½ÑŒÑˆÐµÐ³Ð¾ Ð¿Ñ€ÑÐ¼Ð¾ÑƒÐ³Ð¾Ð»ÑŒÐ½Ð¸ÐºÐ°, ÑÐ¾Ð´ÐµÑ€Ð¶Ð°Ñ‰ÐµÐ³Ð¾ Ð´Ð²Ð° Ð·Ð°Ð´Ð°Ð½Ð½Ñ‹Ñ… Ð¿Ñ€ÑÐ¼Ð¾ÑƒÐ³Ð¾Ð»ÑŒÐ½Ð¸ÐºÐ°" << endl;
-		cout << "(4) â€” Ð¿Ð¾ÑÑ‚Ñ€Ð¾ÐµÐ½Ð¸Ðµ Ð½Ð°Ð¸Ð¼ÐµÐ½ÑŒÑˆÐµÐ³Ð¾ Ð¿Ñ€ÑÐ¼Ð¾ÑƒÐ³Ð¾Ð»ÑŒÐ½Ð¸ÐºÐ°, ÑÐ²Ð»ÑÑŽÑ‰ÐµÐ³Ð¾ÑÑ Ð¿ÐµÑ€ÐµÑÐµÑ‡ÐµÐ½Ð¸ÐµÐ¼ Ð´Ð²ÑƒÑ… Ð·Ð°Ð´Ð°Ð½Ð½Ñ‹Ñ… Ð¿Ñ€ÑÐ¼Ð¾ÑƒÐ³Ð¾Ð»ÑŒÐ½Ð¸ÐºÐ°" << endl;
-		cout << "(5) â€” Ð²Ñ‹Ñ…Ð¾Ð´" << endl;
+		cout << endl << endl << "Âûáåðèòå íóæíîå äåéñòâèå: " << endl;
+		cout << "(1) — ïåðåìåùåíèå ôèãóðû íà ïëîñêîñòè" << endl;
+		cout << "(2) — èçìåíåíèå ðàçìåðà ôèãóðû" << endl;
+		cout << "(3) — ïîñòðîåíèå íàèìåíüøåãî ïðÿìîóãîëüíèêà, ñîäåðæàùåãî äâà çàäàííûõ ïðÿìîóãîëüíèêà" << endl;
+		cout << "(4) — ïîñòðîåíèå íàèìåíüøåãî ïðÿìîóãîëüíèêà, ÿâëÿþùåãîñÿ ïåðåñå÷åíèåì äâóõ çàäàííûõ ïðÿìîóãîëüíèêà" << endl;
+		cout << "(5) — âûõîä" << endl;
 
-		int e;
+		int e=0, s1=0, s2=0;
 		cout << endl;
 		cin >> e;
 
-		switch (e)
+		/*switch (e)
 		{
 		case 1:
-			program.move();
-			program.output();
+			cout << "Âûáåðèòå íóæíîå äåéñòâèå äëÿ ïðîäîëæåíèÿ" << endl;
+			cout << "(1) — óâåëè÷èòü" << endl << "(2) — óìåíüøèòü" << endl << "(3) — âûõîä â ìåíþ" << endl;
+			int input = 0;
+			cin >> input;
+			int multiplier = 0;
+			program.size(input, multiplier);
 			break;
 
 		case 2:
-			program.size();
-			program.output();
+			cout << "Ââåäèòå çíà÷åíèå, íà êîòîðîå âû õîòèòå ñìåñòèòü ôèãóðó" << endl;
+			cout << "Ïî x: ";
+			cin >> s1;
+			cout << "Ïî y: ";
+			cin >> s2;
+			program.move(s1, s2);
 			break;
 
 		case 3:
-			program.connection();
-			program.output();
+
 			break;
 
 		case 4:
-			program.leastUnion();
-			program.output();
+
 			break;
 
 		case 5:
@@ -172,8 +162,9 @@ int main()
 			break;
 
 		default:
-			cout << "ÐžÑˆÐ¸Ð±ÐºÐ°!" << endl << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ðµ Ð¾Ñ‚ 1 Ð´Ð¾ 5!" << endl;
-		}
+			cout << "Îøèáêà!" << endl << "Ââåäèòå çíà÷åíèå îò 1 äî 5!" << endl;
+		} */
 	}
+	system("pause");
 	return 0;
 }
