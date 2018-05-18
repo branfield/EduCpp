@@ -1,3 +1,4 @@
+#include<iostream>
 #include <windows.h>
 using namespace std;
 
@@ -6,7 +7,6 @@ class Rect
 private:
 
 	int x1, y1, x2, y2;
-	int x3, y3, x4, y4;
 
 public:
 
@@ -58,80 +58,196 @@ public:
 		y2 -= addendum;
 	}
 
-	void connection()
+	void get(int abs, int ord, int abs0, int ord0)
 	{
-		//Случаи, когда прямоугольники пересекаются
-		if ((y3 < y1) && (y3 < y2) && (y2 < y4) && (x3 < x2) && (x3 > x1))
-		{
-			x3 = x1;
-			y3 = y1;
-		}
-		else if ((y1 < y3) && (y1 < y4) && (y4 > y2) && (x1 < x4) && (x1 > x3) && (x4 < x2))
-		{
-			x4 = x2;
-			y4 = y2;
-		}
-		else if ((x1<x3) && (x2<x4) && (x2>x3) && (y3>y1) && (y1>y4) && (y2<y4))
-		{
-			x3 = x1;
-			y4 = y2;
-		}
-		else if ((x3 < x1) && (x4 > x2) && (x1 < x4) && (y3 < y1) && (y3 > y4) && (y2 > y4))
-		{
-			y3 = y1;
-			x4 = x2;
-		}
-		//Случай, когда прямоугольники совпадают
-		else if ((x1 = x3) && (x2 = x4) && (y1 = y3) && (y1 = y4))
-		{
-			x3 = x1;
-			y3 = y1;
-			x4 = x2;
-			y4 = y2;
-		}
-		//Случаи, когда прямоугольники НЕ пересекаются
-		//Случаи, когда один прямоугольник находится внутри другого
+		abs = x1;
+		ord = y1;
+		abs0 = x2;
+		ord0 = y2;
 	}
 
-	void leastUnion()
+	int getx1()
 	{
-		//Случаи, когда прямоугольники пересекаются
-		if ((y3 < y1) && (y3 < y2) && (y2 < y4) && (x3 < x2) && (x3 > x1))
-		{
-			x4 = x2;
-			y4 = y2;
-		}
-		if ((y1 < y3) && (y1 < y4) && (y4 > y2) && (x1 < x4) && (x1 > x3) && (x4 < x2))
-		{
-			x3 = x1;
-			y3 = y1;
-		}
-		else if ((x1<x3) && (x2<x4) && (x2>x3) && (y3>y1) && (y1>y4) && (y2<y4))
-		{
-			y3 = y1;
-			x4 = x2;
-		}
-		else if ((x3 < x1) && (x4 > x2) && (x1 < x4) && (y3 < y1) && (y3 > y4) && (y2 > y4))
-		{
-			x3 = x1;
-			y4 = y2;
-		}
-		//Случай, когда прямоугольники совпадают
-		else if ((x1 = x3) && (x2 = x4) && (y1 = y3) && (y1 = y4))
-		{
-			x3 = x1;
-			y3 = y1;
-			x4 = x2;
-			y4 = y2;
-		}
-		//Случаи, когда прямоугольники НЕ пересекаются
-		//Случаи, когда один прямоугольник находится внутри другого
+		return x1;
+	}
+
+	int gety1()
+	{
+		return y1;
+	}
+
+	int getx2()
+	{
+		return x2;
+	}
+
+	int gety2()
+	{
+		return y2;
 	}
 
 	~Rect()
 	{
 	}
 };
+
+void leastUnion(Rect figure1, Rect figure2)
+{
+	int x1 = 0, y1 = 0, x2 = 0, y2 = 0, x3 = 0, y3 = 0, x4 = 0, y4 = 0;
+	int X1 = 0, Y1 = 0, X2 = 0, Y2 = 0;
+	figure1.get(x1, y1, x2, y2);
+	figure2.get(x3, y3, x4, y4);
+
+	//Случаи, когда прямоугольники пересекаются
+	if ((x3 > x1) && (x2 > x3) && (y1 >= y3) && (y3 <= y2))
+	{
+		X1 = x1;
+		Y1 = y1;
+		X2 = x4;
+		Y2 = y4;
+	}
+	else if ((x3 < x1) && (x1 < x4) && (y3 >= y1) && (y1 >= y4))
+	{
+		X1 = x3;
+		Y1 = y3;
+		X2 = x2;
+		Y2 = y2;
+	}
+	else if ((x3 > x1) && (x4 > x2) && (y3 > y1) && (y1 < y4))
+	{
+		X1 = x1;
+		Y1 = y3;
+		X2 = x4;
+		Y2 = y2;
+	}
+	else if ((x1>x3) && (x4>x1) && (y1>y3) && (y3>y2))
+	{
+		X1 = x3;
+		Y1 = y1;
+		X2 = x2;
+		Y2 = y4;
+	}
+
+	//Случай, когда один прямоугольник находится внутри другого или совпадает с ним
+	else if (((x3 >= x1) && (x4 <= x2) && (y3 <= y1) && (y4 >= y2)))
+	{
+		X1 = x3;
+		Y1 = y3;
+		X2 = x4;
+		Y2 = y4;
+	}
+	else if (((x1 >= x3) && (x2 <= x4) && (y1 <= y3) && (y2 >= y4)))
+	{
+		X1 = x1;
+		Y1 = y1;
+		X2 = x2;
+		Y2 = y2;
+	}
+
+	//Случаи, когда прямоугольники НЕ пересекаются
+	else if (((y2 > y3) && (y1 < y4)) || ((x2 < x3) && (x1 < x4)))
+	{
+		X1 = x1;
+		Y1 = y1;
+		X2 = x4;
+		Y2 = y4;
+	}
+	else if (((y4 < y1) && (y3 < y2)) || ((x4 < x1) && (x3 < x2)))
+	{
+		X1 = x3;
+		Y1 = y3;
+		X2 = x2;
+		Y2 = y2;
+	}
+
+	cout << "Полученные значения: " << endl;
+	cout << "Верхняя левая точка: " << endl;
+	cout << "x = " << X1 << endl;
+	cout << "y = " << Y1 << endl;
+	cout << "Нижняя правая точка: " << endl;
+	cout << "x = " << X2 << endl;
+	cout << "y = " << Y2 << endl; 
+}
+
+void connection(Rect figure1, Rect figure2)
+{
+	int x1 = 0, y1 = 0, x2 = 0, y2 = 0, x3 = 0, y3 = 0, x4 = 0, y4 = 0;
+	int X1 = 0, Y1 = 0, X2 = 0, Y2 = 0;
+	figure1.get(x1, y1, x2, y2);
+	figure2.get(x3, y3, x4, y4);
+
+	//Случаи, когда прямоугольники НЕ пересекаются
+	 if ((y2 > y3) && (y1 < y4))
+	{
+		cout << "Такого прямоугольника не существует!" << endl;
+	}
+	else if ((y4 < y1) && (y3 < y2))
+	{
+		cout << "Такого прямоугольника не существует!" << endl;
+	}
+	else if ((x2 < x3) && (x1 < x4))
+	{
+		cout << "Такого прямоугольника не существует!" << endl;
+	}
+	else if ((x4 < x1) && (x3 < x2))
+	{
+		cout << "Такого прямоугольника не существует!" << endl;
+	}
+
+	//Случаи, когда прямоугольники пересекаются
+	else if ((x3 > x1) && (x2 > x3) && (y1 >= y3) && (y3 <= y2))
+	{
+		X1 = x3;
+		Y1 = y3;
+		X2 = x2;
+		Y2 = y2;
+	}
+	else if ((x3 < x1) && (x1 < x4) && (y3 >= y1) && (y1 >= y4))
+	{
+		X1 = x1;
+		Y1 = y1;
+		X2 = x4;
+		Y2 = y4;
+	}
+	else if ((x3 > x1) && (x4 > x2) && (y3 > y1) && (y1 < y4))
+	{
+		X1 = x3;
+		Y1 = y1;
+		X2 = x2;
+		Y2 = y4;
+	}
+	else if ((x1>x3)&&(x4>x1)&&(y1>y3)&&(y3>y2))
+	{
+		X1 = x1;
+		Y1 = y3;
+		X2 = x4;
+		Y2 = y2;
+	}
+
+	//Случай, когда один прямоугольник находится внутри другого или совпадает с ним
+	else if (((x3 >= x1) && (x4 <= x2) && (y3 <= y1) && (y4 >= y2)))
+	{
+		X1 = x1;
+		Y1 = y1;
+		X2 = x2;
+		Y2 = y2;
+	}
+	else if (((x1 >= x3) && (x2 <= x4) && (y1 <= y3) && (y2 >= y4)))
+	{
+		X1 = x3;
+		Y1 = y3;
+		X2 = x4;
+		Y2 = y4;
+	}
+
+	cout << "Полученные значения: " << endl;
+	cout << "Верхняя левая точка: " << endl;
+	cout << "x = " << X1 << endl;
+	cout << "y = " << Y1 << endl;
+	cout << "Нижняя правая точка: " << endl;
+	cout << "x = " << X2 << endl;
+	cout << "y = " << Y2 << endl;
+}
 
 
 int FoolProtection(char* buff = new char)
@@ -142,6 +258,7 @@ int FoolProtection(char* buff = new char)
 		bool normal = true;
 		for (int i = 0; i < strlen(buff); i++)
 		{
+			if (buff[0] == '-') i++;
 			if (buff[i] < '0' || buff[i] > '9')
 			{
 				normal = false;
@@ -151,8 +268,7 @@ int FoolProtection(char* buff = new char)
 
 		if (!normal)
 		{
-			cout << "Ошибка ввода. Введите число. " << endl;
-			break;
+			return -1;
 		}
 		else
 		{
@@ -163,47 +279,92 @@ int FoolProtection(char* buff = new char)
 	}
 }
 
+bool set(char* buff, int a)
+{
+	cin >> buff;
+	if (FoolProtection(buff) == -1)
+	{
+		cout << "Ошибка ввода. Введите число. " << endl;
+		return 0;
+	}
+	else
+	{
+		a = FoolProtection(buff);
+		return 1;
+	}
+}
+
+
 int main()
 {
 	setlocale(0, "");
 	cout << "Для начала работы требуется ввести координаты прямоугольника. " << endl;
 	bool condition = false;
-	char* x1 = new char;
-	char* y1 = new char;
-	char* x2 = new char;
-	char* y2 = new char;
+	int x1 = 0, y1 = 0, x2 = 0, y2 = 0;
+	int x3 = 0, y3 = 0, x4 = 0, y4 = 0;
+	char* abs1 = new char;
+	char* ord1 = new char;
+	char* abs2 = new char;
+	char* ord2 = new char;
+	bool smth = true;
+
+	Rect* r1 = new Rect (0,0,0,0);
 
 	while (!condition)
 	{
 		cout << "Введите координаты верхней левой точки: " << endl;
-		cout << "x = ";
-		cin >> x1;
-		FoolProtection(x1);
 
+		do 
+		{
+			if (set(abs1, x1) == 0)
+			{
+				cout << "x = ";
+				set(abs1, x1);
+			}
+			else
+			{
+				smth = false;
+				break;
+			}
+		}
+		while (true);
+
+		
 		cout << "y = ";
-		cin >> y1;
-		FoolProtection(y1);
+		set(ord1, y1);
 
 		cout << "Введите координаты нижней правой точки: " << endl;
-
 		cout << "x = ";
-		cin >> x2;
-		FoolProtection(x2);
+		set(abs2, x2);
 
 		cout << "y = ";
-		cin >> y2;
-		FoolProtection(y2);
+		set(ord2, y2);
+
+		*r1 = Rect(x1, y1, x2, y2);
+		r1->getx1();
+		r1->getx2();
+		r1->gety1();
+		r1->gety2();
 
 		int height = 0, widht = 0;
-		height = y1 - y2;
-		widht = x2 - x1;
+		height = abs(r1->gety1() - r1->gety2());
+		widht = abs((r1->getx2() - r1->getx1()));
 		if ((height <= 0) || (widht <= 0)) cout << "Полученная фигура не является прямоугольником, повторите ввод " << endl;
 		else condition = true;
 	}
-	Rect program(x1, y1, x2, y2);
+
 
 	bool flag = false;
-	int input = 0;
+	bool flag1 = false;
+	bool flag2 = false;
+	bool flag3 = false;
+	bool flag4 = false;
+	int input = 0, input1 = 0, input2 = 0;
+	int addendum = 0, multiplier = 0;
+
+	Rect* r2 = new Rect(0, 0, 0, 0);
+	Rect* r3 = new Rect(0, 0, 0, 0);
+
 	while (!flag)
 	{
 		cout << "Выберите нужное действие: " << endl << endl;
@@ -218,9 +379,6 @@ int main()
 		switch (input)
 		{
 		case 1:
-			bool flag1 = false;
-			int input1 = 0;
-			int addendum = 0;
 			while (!flag1)
 			{
 				cout << "(1) — переместить фигуру вправо " << endl;
@@ -235,24 +393,24 @@ int main()
 				case 1:
 					cout << "На какое значение Вы хотите сместить фигуру? " << endl;
 					cin >> addendum;
-					program.moveRight(addendum);
+					r1->moveRight(addendum);
 					break;
 
 				case 2:
 					cout << "На какое значение Вы хотите сместить фигуру? " << endl;
 					cin >> addendum;
-					program.moveLeft(addendum);
+					r1->moveLeft(addendum);
 					break;
 
 				case 3:
 					cout << "На какое значение Вы хотите сместить фигуру? " << endl;
 					cin >> addendum;
-					program.moveUp(addendum);
+					r1->moveUp(addendum);
 					break;
 
 				case 4:
 					cout << "На какое значение Вы хотите сместить фигуру? " << endl;
-					program.moveDown(addendum);
+					r1->moveDown(addendum);
 					cin >> addendum;
 					break;
 
@@ -266,9 +424,6 @@ int main()
 			}
 
 		case 2:
-			bool flag2 = false;
-			int input2 = 0;
-			int multiplier = 0;
 			while (!flag2)
 			{
 				cout << "(1) — увеличить фигуру " << endl;
@@ -281,13 +436,13 @@ int main()
 				case 1:
 					cout << "Во сколько раз Вы хотите увеличить фигуру? " << endl;
 					cin >> multiplier;
-					program.sizeIncrease(multiplier);
+					r1->sizeIncrease(multiplier);
 					break;
 
 				case 2:
 					cout << "Во сколько раз Вы хотите уменьшить фигуру? " << endl;
 					cin >> multiplier;
-					program.sizeReduce(multiplier);
+					r1->sizeReduce(multiplier);
 					break;
 
 				case 3:
@@ -300,49 +455,57 @@ int main()
 				}
 			}
 
-			case 3:
+		case 3:
 			cout << "Для продолжения работы требуется второй прямоугольник" << endl;
-			bool flag3 = false;
-			while (!flag3)
+			while (!condition)
 			{
-			cout << "Введите координаты верхней левой точки: " << endl;
+				cout << "Введите координаты верхней левой точки: " << endl;
+				cout << "x = ";
+				set(abs1, x1);
 
-			char* x3 = new char;
-			cout << "x = ";
-			cin >> x3;
-			FoolProtection(x3);
+				cout << "y = ";
+				set(ord1, y1);
 
-			char* y3 = new char;
-			cout << "y = ";
-			cin >> y3;
-			FoolProtection(y3);
+				cout << "Введите координаты нижней правой точки: " << endl;
+				cout << "x = ";
+				set(abs2, x2);
 
-			cout << "Введите координаты нижней правой точки: " << endl;
+				cout << "y = ";
+				set(ord2, y2);
 
-			char* x4 = new char;
-			cout << "x = ";
-			cin >> x4;
-			FoolProtection(x4);
-
-			char* y4 = new char;
-			cout << "y = ";
-			cin >> y4;
-			FoolProtection(y4);
-
-			int height = 0, widht = 0;
-			height = y1 - y2;
-			widht = x2 - x1;
-			if ((height <= 0) || (widht <= 0)) cout << "Полученная фигура не является прямоугольником, повторите ввод " << endl;
-			else flag3 = true;
+				int height = abs(y1 - y2);
+				int widht = abs(x2 - x1);
+				if ((height <= 0) || (widht <= 0)) cout << "Полученная фигура не является прямоугольником, повторите ввод " << endl;
+				else condition = true;
 			}
+			*r2 = Rect(x1, y1, x2, y2); 
+			connection(*r1, *r2);
+			
 
-			cout << "Наименьший полученный прямоугольник имеет координаты: " << endl;
-			cout << " x1 = " << x3 << endl;
-			cout << "y1 = " << y3 << endl;
-			cout << "x2 = " << x4 << endl;
-			cout << "y2 = " << y4 << endl;
+		case 4:
+			cout << "Для продолжения работы требуется второй прямоугольник" << endl;
+			while (!condition)
+			{
+				cout << "Введите координаты верхней левой точки: " << endl;
+				cout << "x = ";
+				set(abs1, x1);
 
-			case 4:
+				cout << "y = ";
+				set(ord1, y1);
+
+				cout << "Введите координаты нижней правой точки: " << endl;
+				cout << "x = ";
+				set(abs2, x2);
+
+				cout << "y = ";
+				set(ord2, y2);
+
+				int height = abs(y1 - y2);
+				int widht = abs(x2 - x1);
+				if ((height <= 0) || (widht <= 0)) cout << "Полученная фигура не является прямоугольником, повторите ввод " << endl;
+				else condition = true;
+			}
+			*r3 = Rect(x1, y1, x2, y2);
 
 		case 5:
 			flag = true;
