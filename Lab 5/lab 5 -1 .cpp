@@ -166,7 +166,7 @@ void leastUnion(Rect figure1, Rect figure2)
 	cout << "y = " << Y1 << endl;
 	cout << "Нижняя правая точка: " << endl;
 	cout << "x = " << X2 << endl;
-	cout << "y = " << Y2 << endl; 
+	cout << "y = " << Y2 << endl;
 }
 
 void connection(Rect figure1, Rect figure2)
@@ -177,7 +177,7 @@ void connection(Rect figure1, Rect figure2)
 	figure2.get(x3, y3, x4, y4);
 
 	//Случаи, когда прямоугольники НЕ пересекаются
-	 if ((y2 > y3) && (y1 < y4))
+	if ((y2 > y3) && (y1 < y4))
 	{
 		cout << "Такого прямоугольника не существует!" << endl;
 	}
@@ -216,7 +216,7 @@ void connection(Rect figure1, Rect figure2)
 		X2 = x2;
 		Y2 = y4;
 	}
-	else if ((x1>x3)&&(x4>x1)&&(y1>y3)&&(y3>y2))
+	else if ((x1>x3) && (x4>x1) && (y1>y3) && (y3>y2))
 	{
 		X1 = x1;
 		Y1 = y3;
@@ -279,18 +279,18 @@ int FoolProtection(char* buff = new char)
 	}
 }
 
-bool set(char* buff, int a)
+int set(char* buff, int a)
 {
 	cin >> buff;
 	if (FoolProtection(buff) == -1)
 	{
 		cout << "Ошибка ввода. Введите число. " << endl;
-		return 0;
+		return 1;
 	}
 	else
 	{
 		a = FoolProtection(buff);
-		return 1;
+		return a;
 	}
 }
 
@@ -308,37 +308,68 @@ int main()
 	char* ord2 = new char;
 	bool smth = true;
 
-	Rect* r1 = new Rect (0,0,0,0);
+	Rect* r1 = new Rect(0, 0, 0, 0);
 
 	while (!condition)
 	{
 		cout << "Введите координаты верхней левой точки: " << endl;
-
-		do 
+		cout << "x = ";
+		do
 		{
-			if (set(abs1, x1) == 0)
+			if (set(abs1, x1)==1)
 			{
 				cout << "x = ";
-				set(abs1, x1);
 			}
 			else
 			{
 				smth = false;
 				break;
 			}
-		}
-		while (true);
+		} while (true);
 
-		
+
 		cout << "y = ";
-		set(ord1, y1);
+		do
+		{
+			if (set(ord1, y1) == 1)
+			{
+				cout << "x = ";
+			}
+			else
+			{
+				smth = false;
+				break;
+			}
+		} while (true);
 
 		cout << "Введите координаты нижней правой точки: " << endl;
 		cout << "x = ";
-		set(abs2, x2);
+		do
+		{
+			if (set(abs2, x2) == 0)
+			{
+				cout << "x = ";
+			}
+			else
+			{
+				smth = false;
+				break;
+			}
+		} while (true);
 
 		cout << "y = ";
-		set(ord2, y2);
+		do
+		{
+			if (set(ord2, y2) == 0)
+			{
+				cout << "y = ";
+			}
+			else
+			{
+				smth = false;
+				break;
+			}
+		} while (true);
 
 		*r1 = Rect(x1, y1, x2, y2);
 		r1->getx1();
@@ -347,8 +378,8 @@ int main()
 		r1->gety2();
 
 		int height = 0, widht = 0;
-		height = abs(r1->gety1() - r1->gety2());
-		widht = abs((r1->getx2() - r1->getx1()));
+		height = r1->gety1() - r1->gety2();
+		widht = r1->getx2() - r1->getx1();
 		if ((height <= 0) || (widht <= 0)) cout << "Полученная фигура не является прямоугольником, повторите ввод " << endl;
 		else condition = true;
 	}
@@ -478,9 +509,9 @@ int main()
 				if ((height <= 0) || (widht <= 0)) cout << "Полученная фигура не является прямоугольником, повторите ввод " << endl;
 				else condition = true;
 			}
-			*r2 = Rect(x1, y1, x2, y2); 
+			*r2 = Rect(x1, y1, x2, y2);
 			connection(*r1, *r2);
-			
+
 
 		case 4:
 			cout << "Для продолжения работы требуется второй прямоугольник" << endl;
