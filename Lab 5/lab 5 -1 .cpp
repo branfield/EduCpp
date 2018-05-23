@@ -65,7 +65,22 @@ public:
 		abs0 = x2;
 		ord0 = y2;
 	}
-
+	void setx1(char* x1)
+	{
+		this->x1 = atoi(x1);
+	}
+	void sety1(char* y1)
+	{
+		this->y1 = atoi(y1);
+	}
+	void setx2(char* x2)
+	{
+		this->x2 = atoi(x2);
+	}
+	void sety2(char* y2)
+	{
+		this->y2 = atoi(y2);
+	}
 	int getx1()
 	{
 		return x1;
@@ -250,48 +265,28 @@ void connection(Rect figure1, Rect figure2)
 }
 
 
-int FoolProtection(char* buff = new char)
+bool FoolProtection(char* buff = new char)
 {
-	bool flag = true;
-	while (true)
+	bool check;
+	for (int i = 0; i < strlen(buff); i++)
 	{
-		bool normal = true;
-		for (int i = 0; i < strlen(buff); i++)
+		if (buff[0] == '-') i++;
+		if (buff[i] >= '0' && buff[i] <= '9')
 		{
-			if (buff[0] == '-') i++;
-			if (buff[i] < '0' || buff[i] > '9')
-			{
-				normal = false;
-				break;
-			}
-		}
-
-		if (!normal)
-		{
-			return -1;
+			check = true;
 		}
 		else
-		{
-			return atoi(buff);
-			flag = false;
-			break;
-		}
+			check = false;
 	}
+	if (check)
+		return true;
+	else
+		return false;
 }
 
-int set(char* buff, int a)
+void output()
 {
-	cin >> buff;
-	if (FoolProtection(buff) == -1)
-	{
-		cout << "Ошибка ввода. Введите число. " << endl;
-		return 1;
-	}
-	else
-	{
-		a = FoolProtection(buff);
-		return a;
-	}
+
 }
 
 
@@ -309,36 +304,37 @@ int main()
 	bool smth = true;
 
 	Rect* r1 = new Rect(0, 0, 0, 0);
-
 	while (!condition)
 	{
 		cout << "Введите координаты верхней левой точки: " << endl;
 		cout << "x = ";
+
 		do
 		{
-			if (set(abs1, x1)==1)
+			cin >> abs1;
+			if (FoolProtection(abs1))
 			{
-				cout << "x = ";
+				r1->setx1(abs1);
+				break;
 			}
 			else
 			{
-				smth = false;
-				break;
+				cout << "Ошибка ввода, введите число" << endl << "x = ";
 			}
 		} while (true);
-
 
 		cout << "y = ";
 		do
 		{
-			if (set(ord1, y1) == 1)
+			cin >> ord1;
+			if (FoolProtection(ord1))
 			{
-				cout << "x = ";
+				r1->sety1(ord1);
+				break;
 			}
 			else
 			{
-				smth = false;
-				break;
+				cout << "Ошибка ввода, введите число" << endl << "y = ";
 			}
 		} while (true);
 
@@ -346,40 +342,38 @@ int main()
 		cout << "x = ";
 		do
 		{
-			if (set(abs2, x2) == 0)
+			cin >> abs2;
+			if (FoolProtection(abs2))
 			{
-				cout << "x = ";
+				r1->setx2(abs2);
+				break;
 			}
 			else
 			{
-				smth = false;
-				break;
+				cout << "Ошибка ввода, введите число" << endl << "x = ";
 			}
 		} while (true);
 
 		cout << "y = ";
 		do
 		{
-			if (set(ord2, y2) == 0)
+			cin >> ord2;
+			if (FoolProtection(ord2))
 			{
-				cout << "y = ";
+				r1->sety2(ord2);
+				break;
 			}
 			else
 			{
-				smth = false;
-				break;
+				cout << "Ошибка ввода, введите число" << endl << "y = ";
 			}
 		} while (true);
 
-		*r1 = Rect(x1, y1, x2, y2);
-		r1->getx1();
-		r1->getx2();
-		r1->gety1();
-		r1->gety2();
+		//*r1 = Rect(x1, y1, x2, y2);
 
 		int height = 0, widht = 0;
-		height = r1->gety1() - r1->gety2();
-		widht = r1->getx2() - r1->getx1();
+		height = abs(r1->gety1() - r1->gety2());
+		widht = abs(r1->getx2() - r1->getx1());
 		if ((height <= 0) || (widht <= 0)) cout << "Полученная фигура не является прямоугольником, повторите ввод " << endl;
 		else condition = true;
 	}
@@ -492,20 +486,72 @@ int main()
 			{
 				cout << "Введите координаты верхней левой точки: " << endl;
 				cout << "x = ";
-				set(abs1, x1);
+
+				do
+				{
+					cin >> abs1;
+					if (FoolProtection())
+					{
+						r1->setx1(abs1);
+						break;
+					}
+					else
+					{
+						cout << "Ошибка ввода, введите число" << endl << "x = ";
+					}
+				} while (true);
 
 				cout << "y = ";
-				set(ord1, y1);
+				do
+				{
+					cin >> ord1;
+					if (FoolProtection())
+					{
+						r1->sety1(ord1);
+						break;
+					}
+					else
+					{
+						cout << "Ошибка ввода, введите число" << endl << "y = ";
+					}
+				} while (true);
 
 				cout << "Введите координаты нижней правой точки: " << endl;
 				cout << "x = ";
-				set(abs2, x2);
+				do
+				{
+					cin >> abs2;
+					if (FoolProtection())
+					{
+						r1->setx2(abs2);
+						break;
+					}
+					else
+					{
+						cout << "Ошибка ввода, введите число" << endl << "x = ";
+					}
+				} while (true);
 
 				cout << "y = ";
-				set(ord2, y2);
+				do
+				{
+					cin >> abs1;
+					if (FoolProtection())
+					{
+						r1->sety2(ord2);
+						break;
+					}
+					else
+					{
+						cout << "Ошибка ввода, введите число" << endl << "y = ";
+					}
+				} while (true);
 
-				int height = abs(y1 - y2);
-				int widht = abs(x2 - x1);
+				*r1 = Rect(x1, y1, x2, y2);
+
+				int height = 0, widht = 0;
+				height = r1->gety1() - r1->gety2();
+				widht = r1->getx2() - r1->getx1();
 				if ((height <= 0) || (widht <= 0)) cout << "Полученная фигура не является прямоугольником, повторите ввод " << endl;
 				else condition = true;
 			}
@@ -519,20 +565,72 @@ int main()
 			{
 				cout << "Введите координаты верхней левой точки: " << endl;
 				cout << "x = ";
-				set(abs1, x1);
+
+				do
+				{
+					cin >> abs1;
+					if (FoolProtection())
+					{
+						r1->setx1(abs1);
+						break;
+					}
+					else
+					{
+						cout << "Ошибка ввода, введите число" << endl << "x = ";
+					}
+				} while (true);
 
 				cout << "y = ";
-				set(ord1, y1);
+				do
+				{
+					cin >> ord1;
+					if (FoolProtection())
+					{
+						r1->sety1(ord1);
+						break;
+					}
+					else
+					{
+						cout << "Ошибка ввода, введите число" << endl << "y = ";
+					}
+				} while (true);
 
 				cout << "Введите координаты нижней правой точки: " << endl;
 				cout << "x = ";
-				set(abs2, x2);
+				do
+				{
+					cin >> abs2;
+					if (FoolProtection())
+					{
+						r1->setx2(abs2);
+						break;
+					}
+					else
+					{
+						cout << "Ошибка ввода, введите число" << endl << "x = ";
+					}
+				} while (true);
 
 				cout << "y = ";
-				set(ord2, y2);
+				do
+				{
+					cin >> abs1;
+					if (FoolProtection())
+					{
+						r1->sety2(ord2);
+						break;
+					}
+					else
+					{
+						cout << "Ошибка ввода, введите число" << endl << "y = ";
+					}
+				} while (true);
 
-				int height = abs(y1 - y2);
-				int widht = abs(x2 - x1);
+				*r1 = Rect(x1, y1, x2, y2);
+
+				int height = 0, widht = 0;
+				height = r1->gety1() - r1->gety2();
+				widht = r1->getx2() - r1->getx1();
 				if ((height <= 0) || (widht <= 0)) cout << "Полученная фигура не является прямоугольником, повторите ввод " << endl;
 				else condition = true;
 			}
