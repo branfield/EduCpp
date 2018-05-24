@@ -73,10 +73,12 @@ public:
 	{
 		this->y1 = atoi(y1);
 	}
+
 	void setx2(char* x2)
 	{
 		this->x2 = atoi(x2);
 	}
+
 	void sety2(char* y2)
 	{
 		this->y2 = atoi(y2);
@@ -186,10 +188,9 @@ void leastUnion(Rect figure1, Rect figure2)
 
 void connection(Rect figure1, Rect figure2)
 {
-	int x1 = 0, y1 = 0, x2 = 0, y2 = 0, x3 = 0, y3 = 0, x4 = 0, y4 = 0;
+	int x1 = figure1.getx1(), y1 = figure1.gety1(), x2 = figure1.getx2(), y2 = figure1.gety2(),
+		x3 = figure2.getx1(), y3 = figure2.gety1(), x4 = figure2.getx2(), y4 = figure2.gety2();
 	int X1 = 0, Y1 = 0, X2 = 0, Y2 = 0;
-	figure1.get(x1, y1, x2, y2);
-	figure2.get(x3, y3, x4, y4);
 
 	//Случаи, когда прямоугольники НЕ пересекаются
 	if ((y2 > y3) && (y1 < y4))
@@ -265,28 +266,27 @@ void connection(Rect figure1, Rect figure2)
 }
 
 
-bool FoolProtection(char* buff = new char)
+bool FoolProtection(char* buff)
 {
-	bool check;
+
 	for (int i = 0; i < strlen(buff); i++)
 	{
-		if (buff[0] == '-') i++;
-		if (buff[i] >= '0' && buff[i] <= '9')
-		{
-			check = true;
-		}
-		else
-			check = false;
+		if (buff[0] == '-') continue;
+		if (!(buff[i] >= '0' && buff[i] <= '9'))
+			return false;
 	}
-	if (check)
 		return true;
-	else
-		return false;
 }
 
-void output()
+void output(Rect* random)
 {
-
+	cout << endl << "Полученные значения: " << endl;
+	cout << "Верхняя левая точка: " << endl;
+	cout << "x = " << random->getx1() << endl;
+	cout << "y = " << random->gety1() << endl;
+	cout << "Нижняя правая точка: " << endl;
+	cout << "x = " << random->getx2() << endl;
+	cout << "y = " << random->gety2() << endl;
 }
 
 
@@ -369,8 +369,6 @@ int main()
 			}
 		} while (true);
 
-		//*r1 = Rect(x1, y1, x2, y2);
-
 		int height = 0, widht = 0;
 		height = abs(r1->gety1() - r1->gety2());
 		widht = abs(r1->getx2() - r1->getx1());
@@ -419,34 +417,40 @@ int main()
 					cout << "На какое значение Вы хотите сместить фигуру? " << endl;
 					cin >> addendum;
 					r1->moveRight(addendum);
+					output(r1);
 					break;
 
 				case 2:
 					cout << "На какое значение Вы хотите сместить фигуру? " << endl;
 					cin >> addendum;
 					r1->moveLeft(addendum);
+					output(r1);
 					break;
 
 				case 3:
 					cout << "На какое значение Вы хотите сместить фигуру? " << endl;
 					cin >> addendum;
 					r1->moveUp(addendum);
+					output(r1);
 					break;
 
 				case 4:
 					cout << "На какое значение Вы хотите сместить фигуру? " << endl;
-					r1->moveDown(addendum);
 					cin >> addendum;
+					r1->moveDown(addendum);
+					output(r1);
 					break;
 
 				case 5:
+
 					flag1 = true;
 					break;
 
 				default:
 					cout << "Введите значение от 1 до 5 " << endl;
+					
 				}
-			}
+			}break;
 
 		case 2:
 			while (!flag2)
@@ -462,12 +466,14 @@ int main()
 					cout << "Во сколько раз Вы хотите увеличить фигуру? " << endl;
 					cin >> multiplier;
 					r1->sizeIncrease(multiplier);
+					output(r1);
 					break;
 
 				case 2:
 					cout << "Во сколько раз Вы хотите уменьшить фигуру? " << endl;
 					cin >> multiplier;
 					r1->sizeReduce(multiplier);
+					output(r1);
 					break;
 
 				case 3:
@@ -477,12 +483,12 @@ int main()
 				default:
 					cout << "Введите значение от 1 до 3" << endl;
 					break;
-				}
-			}
-
+				} 
+			}break;
+			
 		case 3:
 			cout << "Для продолжения работы требуется второй прямоугольник" << endl;
-			while (!condition)
+			while (condition)
 			{
 				cout << "Введите координаты верхней левой точки: " << endl;
 				cout << "x = ";
@@ -490,9 +496,9 @@ int main()
 				do
 				{
 					cin >> abs1;
-					if (FoolProtection())
+					if (FoolProtection(abs1))
 					{
-						r1->setx1(abs1);
+						r2->setx1(abs1);
 						break;
 					}
 					else
@@ -505,9 +511,9 @@ int main()
 				do
 				{
 					cin >> ord1;
-					if (FoolProtection())
+					if (FoolProtection(ord1))
 					{
-						r1->sety1(ord1);
+						r2->sety1(ord1);
 						break;
 					}
 					else
@@ -521,9 +527,9 @@ int main()
 				do
 				{
 					cin >> abs2;
-					if (FoolProtection())
+					if (FoolProtection(abs2))
 					{
-						r1->setx2(abs2);
+						r2->setx2(abs2);
 						break;
 					}
 					else
@@ -535,10 +541,10 @@ int main()
 				cout << "y = ";
 				do
 				{
-					cin >> abs1;
-					if (FoolProtection())
+					cin >> ord2;
+					if (FoolProtection(ord2))
 					{
-						r1->sety2(ord2);
+						r2->sety2(ord2);
 						break;
 					}
 					else
@@ -547,16 +553,14 @@ int main()
 					}
 				} while (true);
 
-				*r1 = Rect(x1, y1, x2, y2);
-
 				int height = 0, widht = 0;
-				height = r1->gety1() - r1->gety2();
-				widht = r1->getx2() - r1->getx1();
+				height = abs(r2->gety1() - r2->gety2());
+				widht = abs(r2->getx2() - r2->getx1());
 				if ((height <= 0) || (widht <= 0)) cout << "Полученная фигура не является прямоугольником, повторите ввод " << endl;
-				else condition = true;
+				else condition = false;
 			}
-			*r2 = Rect(x1, y1, x2, y2);
 			connection(*r1, *r2);
+			break;
 
 
 		case 4:
@@ -569,9 +573,9 @@ int main()
 				do
 				{
 					cin >> abs1;
-					if (FoolProtection())
+					if (FoolProtection(abs1))
 					{
-						r1->setx1(abs1);
+						r3->setx1(abs1);
 						break;
 					}
 					else
@@ -584,9 +588,9 @@ int main()
 				do
 				{
 					cin >> ord1;
-					if (FoolProtection())
+					if (FoolProtection(ord1))
 					{
-						r1->sety1(ord1);
+						r3->sety1(ord1);
 						break;
 					}
 					else
@@ -600,9 +604,9 @@ int main()
 				do
 				{
 					cin >> abs2;
-					if (FoolProtection())
+					if (FoolProtection(abs2))
 					{
-						r1->setx2(abs2);
+						r3->setx2(abs2);
 						break;
 					}
 					else
@@ -615,9 +619,9 @@ int main()
 				do
 				{
 					cin >> abs1;
-					if (FoolProtection())
+					if (FoolProtection(ord2))
 					{
-						r1->sety2(ord2);
+						r3->sety2(ord2);
 						break;
 					}
 					else
@@ -626,24 +630,21 @@ int main()
 					}
 				} while (true);
 
-				*r1 = Rect(x1, y1, x2, y2);
-
 				int height = 0, widht = 0;
-				height = r1->gety1() - r1->gety2();
-				widht = r1->getx2() - r1->getx1();
+				height = abs(r3->gety1() - r3->gety2());
+				widht = abs(r3->getx2() - r3->getx1());
 				if ((height <= 0) || (widht <= 0)) cout << "Полученная фигура не является прямоугольником, повторите ввод " << endl;
 				else condition = true;
-			}
-			*r3 = Rect(x1, y1, x2, y2);
+			} 
+			leastUnion(*r1, *r3);
+			break;
 
 		case 5:
-			flag = true;
-			break;
+			system("pause");
+			return 0;
 
 		default:
 			cout << "Введите значение от 1 до 5 " << endl;
 		}
 	}
-	system("pause");
-	return 0;
 }
