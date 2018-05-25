@@ -60,7 +60,7 @@ public:
 
 	void leastUnion()
 	{
-	
+
 	}
 
 	void connection()
@@ -76,13 +76,13 @@ public:
 		ord0 = y2;
 	}
 
-	void setx1(char* x1){this->x1 = atoi(x1);}
-	void sety1(char* y1){this->y1 = atoi(y1);}
-	void setx2(char* x2){this->x2 = atoi(x2);}
-	void sety2(char* y2){this->y2 = atoi(y2);}
+	void setx1(char* x1) { this->x1 = atoi(x1); }
+	void sety1(char* y1) { this->y1 = atoi(y1); }
+	void setx2(char* x2) { this->x2 = atoi(x2); }
+	void sety2(char* y2) { this->y2 = atoi(y2); }
 	int getx1() { return x1; }
 	int gety1() { return y1; }
-	int getx2()	{ return x2; }
+	int getx2() { return x2; }
 	int gety2() { return y2; }
 
 	~Rect()
@@ -273,15 +273,14 @@ void menu()
 	cout << "(5) — выход из программы" << endl;
 }
 
-void check(char* value, Rect r, Rect set())
+int check(char* value)
 {
 	do
 	{
 		cin >> value;
-		if (FoolProtection(r))
+		if (FoolProtection(value))
 		{
-			r->set(value);
-			break;
+			return atoi(value);
 		}
 		else
 		{
@@ -333,7 +332,7 @@ int main()
 	{
 		cout << "Введите координаты верхней левой точки: " << endl;
 		cout << "x = ";
-		check(abs1, r1, r1->setx1()); //эти функции должны возвращать set. 
+		int x = check(abs1); //эти функции должны возвращать set. 
 		cout << "y = ";
 		check(ord1, r1, r1->sety1());
 		cout << "Введите координаты нижней правой точки: " << endl;
@@ -410,11 +409,11 @@ int main()
 				{
 				case 1:
 					resize(multiplier, Rect* r1, r1->sizeIncrease()) //та же проблема
-					break;
+						break;
 
 				case 2:
 					resize(multiplier, Rect* r1, r1->sizeReduce())
-					break;
+						break;
 
 				case 3:
 					flag2 = true;
