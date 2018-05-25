@@ -47,26 +47,10 @@ public:
 		lenght = sqrt(pow(x, 2) + pow(y, 2));
 	}
 
-	double getx()
-	{
-		return x;
-	}
-
-	int gety()
-	{
-		return y;
-	}
-
-	void setx(int x)
-	{
-		this->x;
-	}
-
-	void sety(int y)
-	{
-		this->y;
-	}
-
+	double getx(){return x;}
+	double gety(){return y;}
+	void setx(int x){this->x;}
+	void sety(int y){this->y;}
 
 	~Vector() {} //деструктор
 };
@@ -77,7 +61,7 @@ int main()
 	double x1 = 0, y1 = 0, x2 = 0, y2 = 0;
 	Vector v1(0, 0);
 	Vector v2(0, 0);
-	Vector sum(0,0);
+	Vector sum(0, 0);
 	Vector diff(0, 0);
 	Vector multiplication(0, 0);
 	int input = 0;
@@ -107,7 +91,8 @@ int main()
 			v1 = Vector(x1, y1);
 			v2 = Vector(x2, y2);
 			sum = v1 + v2;
-
+			cout << sum;
+			break;
 
 		case 2:
 			cout << "Введите координаты первого вектора: " << endl << "x = ";
@@ -128,7 +113,7 @@ int main()
 			cout << "y = ";
 			cin >> y1;
 			v1 = Vector(x1, y1);
-		/*	length = v1.vectorLenght();*/
+			/*	length = v1.vectorLenght();*/
 
 
 		case 4:
