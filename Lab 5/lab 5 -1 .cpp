@@ -1,5 +1,6 @@
 #include<iostream>
 #include <windows.h>
+#include<cstring>
 using namespace std;
 
 class Rect
@@ -22,50 +23,50 @@ public:
 
 	void sizeIncrease(int temp)
 	{
-		x1 *= temp;
-		y1 *= temp;
-		x2 *= temp;
-		y2 *= temp;
+		abs0 = x1 * temp;
+		ord0 = y1 * temp;
+		abs = x2 * temp;
+		ord = y2 * temp;
 	}
 
 	void sizeReduce(int temp)
 	{
-		x1 /= temp;
-		y1 /= temp;
-		x2 /= temp;
-		y2 /= temp;
+		abs0 = x1 / temp;
+		ord0 = y1 / temp;
+		abs = x2 / temp;
+		ord = y2 / temp;
 	}
 
 	void moveRight(int temp)
 	{
-		x1 += temp;
-		x2 += temp;
+		abs0 = x1 + temp;
+		abs = x2 + temp;
+		ord0 = y1;
+		ord = y2;
 	}
 
 	void moveLeft(int temp)
 	{
-		x1 -= temp;
-		x2 -= temp;
+		abs0 = x1 - temp;
+		abs = x2 - temp;
+		ord0 = y1;
+		ord = y2;
 	}
 
 	void moveUp(int temp)
 	{
-		y1 += temp;
-		y2 += temp;
+		abs0 = x1;
+		abs = x2;
+		ord0 = y1 + temp;
+		ord = y2 + temp;
 	}
 
 	void moveDown(int temp)
 	{
-		y1 -= temp;
-		y2 -= temp;
-	}
-
-	void get(int abs, int ord, int abs0, int ord0)
-	{
-		abs = x1;
-		ord = y1;
-		abs0 = x2;
-		ord0 = y2;
+		abs0 = x1;
+		abs = x2;
+		ord0 = y1 - temp;
+		ord = y2 - temp;
 	}
 
 	void leastUnion()
@@ -90,6 +91,7 @@ public:
 				y = r2[i];
 			}
 		}
+
 		abs0 = x;
 		ord0 = Y;
 		abs = X;
@@ -128,6 +130,7 @@ public:
 				break;
 			}
 		}
+
 		for (int i = 0; i < 4; i++)
 		{
 			if ((r1[i] != X) && (r1[i] != x) && (r1[i] != middlex1))
@@ -136,6 +139,7 @@ public:
 				break;
 			}
 		}
+
 		for (int i = 0; i < 4; i++)
 		{
 			if ((r2[i] != Y) && (r2[i] != y))
@@ -144,6 +148,7 @@ public:
 				break;
 			}
 		}
+
 		for (int i = 0; i < 4; i++)
 		{
 			if ((r2[i] != Y) && (r2[i] != y) && (r2[i] != middley1))
@@ -152,6 +157,7 @@ public:
 				break;
 			}
 		}
+
 		abs0 = middlex1;
 		ord0 = middley2;
 		abs = middlex2;
@@ -167,7 +173,7 @@ public:
 
 void menu()
 {
-	cout << "Выберите нужное действие: " << endl << endl;
+	cout << endl << "Выберите нужное действие: " << endl << endl;
 	cout << "(1) — перемещение фигуры на плоскости" << endl;
 	cout << "(2) — изменение размера фигуры" << endl;
 	cout << "(3) — построение наименьшего прямоугольника, содержащего два заданных прямоугольника" << endl;
@@ -175,41 +181,23 @@ void menu()
 	cout << "(5) — выход из программы" << endl;
 }
 
-void building(int x1, int y1, int x2, int y2)
-{
-	cout << "Введите координаты верхней левой точки: " << endl;
-	cout << "x = ";
-	x1 = FoolProtection();
-
-	cout << "y = ";
-	y1 = FoolProtection();
-
-	cout << "Введите координаты нижней правой точки: " << endl;
-	cout << "x = ";
-	x2 = FoolProtection();
-
-	cout << "y =";
-	y2 = FoolProtection();
-
-	checkForARectangle(x1, y1, x2, y2);
-}
-
 int FoolProtection()
 {
+	char* buff = new char[256];
 	bool flag = true;
-	while (!flag)
+	while (true)
 	{
-		char* buff = new char[256];
 		cin >> buff;
 		for (int i = 0; i < strlen(buff); i++)
 		{
 			if (buff[0] == '-') continue;
-			if (!(buff[i] >= '0' && buff[i] <= '9'))
+			if ((buff[i] >= '0' && buff[i] <= '9'))
 			{
-				flag = true;
+				flag = false;
 				return atoi(buff);
 			}
 			else cout << "Ошибка! Введите число!" << endl;
+			break;
 		}
 	}
 }
@@ -225,6 +213,25 @@ void checkForARectangle(int x1, int y1, int x2, int y2)
 		if ((height <= 0) || (widht <= 0)) cout << "Полученная фигура не является прямоугольником, повторите ввод " << endl;
 		else flag = true;
 	}
+}
+
+void building(int x1, int y1, int x2, int y2)
+{
+	cout << "Введите координаты верхней левой точки: " << endl;
+	cout << "x = ";
+	x1 = FoolProtection();
+
+	cout << "y = ";
+	y1 = FoolProtection();
+
+	cout << endl << "Введите координаты нижней правой точки: " << endl;
+	cout << "x = ";
+	x2 = FoolProtection();
+
+	cout << "y = ";
+	y2 = FoolProtection();
+
+	checkForARectangle(x1, y1, x2, y2);
 }
 
 int move()
@@ -246,14 +253,10 @@ int resize()
 void output(Rect* r)
 {
 	cout << "Полученные значения: " << endl;
-	cout << "x1 = ";
-	r->getabs0();
-	cout << "y1 = ";
-	r->getord0();
-	cout << "x2 = ";
-	r->getabs();
-	cout << "y2 = ";
-	r->getord();
+	cout << "x1 = " << r->getabs0() << endl;
+	cout << "y1 = " << r->getord0() << endl;
+	cout << "x2 = " << r->getabs() << endl;
+	cout << "y2 = " << r->getord() << endl;
 }
 
 int main()
@@ -264,12 +267,13 @@ int main()
 	Rect* r2 = new Rect(0, 0, 0, 0);
 
 	cout << "Для начала работы требуется ввести координаты прямоугольника. " << endl;
+
 	int x1 = 0, y1 = 0, x2 = 0, y2 = 0;
 	building(x1, y1, x2, y2); //вызов функции построения основного прямоугольника
 	r1 = new Rect(x1, y1, x2, y2);
 
 	bool condition = false, flag1 = false, flag2 = false;
-	int input = 0, input1=0, input2 = 0;
+	int input = 0, input1 = 0, input2 = 0;
 	int x3 = 0, y3 = 0, x4 = 0, y4 = 0;
 	int digit = 0;
 
@@ -289,8 +293,8 @@ int main()
 				cout << "(5) — вернуться в меню " << endl;
 				cin >> input1;
 
-				if(input>=1 && input<=4)
-				digit = move();
+				if (input >= 1 && input <= 4)
+					digit = move();
 
 				switch (input1)
 				{
@@ -315,7 +319,6 @@ int main()
 					break;
 
 				case 5:
-
 					flag1 = true;
 					break;
 
@@ -341,12 +344,12 @@ int main()
 				case 1: //увеличение
 					r1->sizeReduce(digit);
 					output(r1);
-						break;
+					break;
 
 				case 2: //уменьшение
 					r1->sizeIncrease(digit);
 					output(r1);
-						break;
+					break;
 
 				case 3:
 					flag2 = true;
@@ -361,18 +364,18 @@ int main()
 		case 3: //построение наименьшего, содержащего два заданных
 			cout << "Для продолжения работы требуется второй прямоугольник" << endl;
 			building(x3, y3, x4, y4); //построение второго прямоугольника
-			r2 = new Rect(x3, y3, x3, y3);
-			r1->leastUnion();
-			output(r1);
+			r2 = new Rect(x3, y3, x4, y4);
+			r2->leastUnion();
+			output(r2);
 			break;
 
 
 		case 4: //объединение двух прямоугольников
 			cout << "Для продолжения работы требуется второй прямоугольник" << endl;
-			building(x3, y3, x4, y4); //построение торого прямоугольника
-			r2 = new Rect(x3, y3, x3, y3);
+			building(x3, y3, x4, y4); //построение dторого прямоугольника
+			r2 = new Rect(x3, y3, x4, y4);
 			r2->connection();
-			output(r1);
+			output(r2);
 			break;
 
 		case 5:
