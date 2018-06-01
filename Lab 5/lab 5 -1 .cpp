@@ -1,6 +1,5 @@
 #include<iostream>
 #include <windows.h>
-#include<cstring>
 using namespace std;
 
 class Rect
@@ -206,34 +205,37 @@ int FoolProtection()
 	}
 }
 
-void checkForARectangle(int* x1, int* y1, int* x2, int* y2)
+void checkForARectangle(int x1, int y1, int x2, int y2)
 {
 	bool flag = true;
-	while (!flag)
+	while (flag)
 	{
 		int height = 0, widht = 0;
-		height = abs(*y1 - *y2);
-		widht = abs(*x2 - *x1);
-		if ((height <= 0) || (widht <= 0)) cout << "Полученная фигура не является прямоугольником, повторите ввод " << endl;
-		else flag = true;
+		height = y1 - y2;
+		widht = x2 - x1;
+		if ((height <= 0) || (widht <= 0))
+		{
+			cout << "Полученная фигура не является прямоугольником, повторите ввод " << endl;
+			return;
+		}
 	}
 }
 
-void building(int* x1, int* y1, int* x2, int* y2)
+void building(int& x1, int& y1, int& x2, int& y2)
 {
 	cout << "Введите координаты верхней левой точки: " << endl;
 	cout << "x = ";
-	*x1 = FoolProtection();
+	x1 = FoolProtection();
 
 	cout << "y = ";
-	*y1 = FoolProtection();
+	y1 = FoolProtection();
 
 	cout << endl << "Введите координаты нижней правой точки: " << endl;
 	cout << "x = ";
-	*x2 = FoolProtection();
+	x2 = FoolProtection();
 
 	cout << "y = ";
-	*y2 = FoolProtection();
+	y2 = FoolProtection();
 
 	checkForARectangle(x1, y1, x2, y2);
 }
@@ -273,7 +275,7 @@ int main()
 	cout << "Для начала работы требуется ввести координаты прямоугольника. " << endl;
 
 	int x1 = 0, y1 = 0, x2 = 0, y2 = 0;
-	building(&x1, &y1, &x2, &y2); //вызов функции построения основного прямоугольника
+	building(x1, y1, x2, y2); //вызов функции построения основного прямоугольника
 	r1 = new Rect(x1, y1, x2, y2);
 
 	bool condition = false, flag1 = false, flag2 = false;
@@ -329,7 +331,7 @@ int main()
 				default:
 					cout << "Введите значение от 1 до 5 " << endl;
 
-				}
+				} break;
 			} break;
 
 		case 2: //изменение размеров
@@ -362,12 +364,12 @@ int main()
 				default:
 					cout << "Введите значение от 1 до 3" << endl;
 					break;
-				}
+				} break;
 			} break;
 
 		case 3: //построение наименьшего, содержащего два заданных
 			cout << "Для продолжения работы требуется второй прямоугольник" << endl;
-			building(&x3, &y3, &x4, &y4); //построение второго прямоугольника
+			building(x3, y3, x4, y4); //построение второго прямоугольника
 			r2 = new Rect(x3, y3, x4, y4);
 			r2->leastUnion();
 			output(r2);
@@ -376,7 +378,7 @@ int main()
 
 		case 4: //объединение двух прямоугольников
 			cout << "Для продолжения работы требуется второй прямоугольник" << endl;
-			building(&x3, &y3, &x4, &y4); //построение dторого прямоугольника
+			building(x3, y3, x4, y4); //построение dторого прямоугольника
 			r2 = new Rect(x3, y3, x4, y4);
 			r2->connection();
 			output(r2);
