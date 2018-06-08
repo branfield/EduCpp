@@ -5,9 +5,6 @@ using namespace std;
 class Rect
 {
 	int x1, y1, x2, y2;
-	int x3, y3, x4, y4;
-	int r1[4] = { x1, y1, x2, y2 }; // для leastUnion 
-	int r2[4] = { x3, y3, x4, y4 }; //	и connection
 	int abs0, ord0, abs, ord; //для output 
 
 public:
@@ -27,7 +24,7 @@ public:
 		abs = x2 * temp;
 		ord = y2 * temp;
 	}
-		
+
 	void sizeReduce(int temp)
 	{
 		abs0 = x1 / temp;
@@ -68,9 +65,11 @@ public:
 		ord = y2 - temp;
 	}
 
-	void leastUnion()
+	void leastUnion(Rect* rect)
 	{
 		int X = 0, Y = 0, x = 0, y = 0;
+		int r1[4] = {this->getx1(), this->gety1(), this->getx2(), this->gety2()};
+		int r2[4] = { x1, y1, x2, y2 };
 		for (int i = 0; i < 4; i++)
 		{
 			if (X < r1[i])
@@ -97,10 +96,12 @@ public:
 		ord = y;
 	}
 
-	void connection()
+	void connection(Rect* rect)
 	{
 		int X = 0, Y = 0, x = 0, y = 0;
 		int middlex1 = 0, middlex2 = 0, middley1 = 0, middley2 = 0;
+		int r1[4] = { this->getx1(), this->gety1(), this->getx2(), this->gety2() };
+		int r2[4] = { x1, y1, x2, y2 };
 		for (int i = 0; i < 4; i++)
 		{
 			if (X < r1[i])
@@ -167,6 +168,10 @@ public:
 	int getord0() { return ord0; }
 	int getabs() { return abs; }
 	int getord() { return ord; }
+	int getx1() { return x1; }
+	int gety1() { return y1; }
+	int getx2() { return x2; }
+	int gety2() { return y2; }
 
 };
 
@@ -205,39 +210,41 @@ int FoolProtection()
 	}
 }
 
-void checkForARectangle(int x1, int y1, int x2, int y2)
+bool checkForARectangle(int x1, int y1, int x2, int y2)
 {
 	bool flag = true;
-	while (flag)
+	int height = 0, widht = 0;
+	height = y1 - y2;
+	widht = x2 - x1;
+	if ((height <= 0) || (widht <= 0))
 	{
-		int height = 0, widht = 0;
-		height = y1 - y2;
-		widht = x2 - x1;
-		if ((height <= 0) || (widht <= 0))
-		{
-			cout << "Полученная фигура не является прямоугольником, повторите ввод " << endl;
-			return;
-		}
+		cout << "Полученная фигура не является прямоугольником, повторите ввод " << endl << endl;
+		return 1;
 	}
+	else return 0;
 }
 
 void building(int& x1, int& y1, int& x2, int& y2)
 {
-	cout << "Введите координаты верхней левой точки: " << endl;
-	cout << "x = ";
-	x1 = FoolProtection();
+	while (checkForARectangle)
+	{
+		cout << "Введите координаты верхней левой точки: " << endl;
+		cout << "x = ";
+		x1 = FoolProtection();
 
-	cout << "y = ";
-	y1 = FoolProtection();
+		cout << "y = ";
+		y1 = FoolProtection();
 
-	cout << endl << "Введите координаты нижней правой точки: " << endl;
-	cout << "x = ";
-	x2 = FoolProtection();
+		cout << endl << "Введите координаты нижней правой точки: " << endl;
+		cout << "x = ";
+		x2 = FoolProtection();
 
-	cout << "y = ";
-	y2 = FoolProtection();
-
-	checkForARectangle(x1, y1, x2, y2);
+		cout << "y = ";
+		y2 = FoolProtection();
+		
+		if (!checkForARectangle(x1, y1, x2, y2))
+			break;
+	}
 }
 
 int move()
@@ -258,7 +265,7 @@ int resize()
 
 void output(Rect* r)
 {
-	cout << "Полученные значения: " << endl;
+	cout << endl <<  "Полученные значения: " << endl;
 	cout << "x1 = " << r->getabs0() << endl;
 	cout << "y1 = " << r->getord0() << endl;
 	cout << "x2 = " << r->getabs() << endl;
@@ -371,16 +378,16 @@ int main()
 			cout << "Для продолжения работы требуется второй прямоугольник" << endl;
 			building(x3, y3, x4, y4); //построение второго прямоугольника
 			r2 = new Rect(x3, y3, x4, y4);
-			r2->leastUnion();
+			r1->leastUnion(r2);
 			output(r2);
 			break;
 
 
 		case 4: //объединение двух прямоугольников
 			cout << "Для продолжения работы требуется второй прямоугольник" << endl;
-			building(x3, y3, x4, y4); //построение dторого прямоугольника
+			building(x3, y3, x4, y4); //построение второго прямоугольника
 			r2 = new Rect(x3, y3, x4, y4);
-			r2->connection();
+			r1->connection(r2);
 			output(r2);
 			break;
 
