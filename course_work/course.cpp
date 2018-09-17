@@ -1,4 +1,4 @@
-#include <iostream>
+ï»¿#include <iostream>
 #include <fstream>
 #include<windows.h>
 using namespace std;
@@ -146,7 +146,7 @@ int** readMaze()
 	int **maze;
 	ifstream fin("input.txt");
 	if (!fin)
-		cout << "Ëàáèðèíò íå íàéäåí!" << endl;
+		cout << "Ð›Ð°Ð±Ð¸Ñ€Ð¸Ð½Ñ‚ Ð½Ðµ Ð½Ð°Ð¹Ð´ÐµÐ½!" << endl;
 	else
 	{
 		int count = 0;
