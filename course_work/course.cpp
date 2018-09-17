@@ -24,7 +24,7 @@ public:
 	{
 		while (count > 0)
 		{
-			Pop();
+			pop();							
 		}
 	}
 
@@ -74,26 +74,22 @@ public:
 			count--;
 			return resultData;
 		}
-		else
-		{
-			return nullptr;
-		}
 	}
 
 	DataType* peek()
 	{
-		if (head) return head->data;
+		if (head) return &head->data;			
 		return nullptr;
 	}
 
-	Node* getHead() { return head;  }
+	Node* getHead() { return head; }
 };
 
 struct Coordinates
 {
 	int x;
 	int y;
-}; 
+};
 
 
 int check(Coordinates current, int **maze)
@@ -111,39 +107,39 @@ int check(Coordinates current, int **maze)
 }
 
 template <class DataType>
-void move(int value, Stack <DataType> stack, Coordinates &current)
+void move(int value, Stack <DataType> stack, Coordinates &current, int** maze)	   
 {
 	switch (value)
 	{
 	case(1):
 		maze[current.x][current.y] = 2;
 		current.y--;
-		stack.push(current, stack.head);
+		stack.push(current);						
 		break;
 
 	case(2):
 		maze[current.x][current.y] = 2;
 		current.x--;
-		stack.push(current, stack.head);
+		stack.push(current);
 		break;
 
 	case(3):
 		maze[current.x][current.y] = 2;
 		current.x++;
-		stack.push(current, stack.head);
+		stack.push(current);
 		break;
 
 	case(4):
 		maze[current.x][current.y] = 2;
 		current.y++;
-		stack.push(current, stack.head);
+		stack.push(current);
 		break;
 	}
 }
 
 int** readMaze()
 {
-	int **maze;
+	int **maze = new int*;				
 	ifstream fin("input.txt");
 	if (!fin)
 		cout << "Лабиринт не найден!" << endl;
@@ -151,34 +147,31 @@ int** readMaze()
 	{
 		int count = 0;
 		int temp;
-
-		while (!fin.eof())
-		{
-			fin >> temp;
-			count++;
-		}
-		fin.seekg(0, ios::beg); 
+		fin.seekg(0, ios::beg);
 		fin.clear();
 		int count_space = 0;
 		char symbol;
 		while (!fin.eof())
 		{
+			count++;
 			fin.get(symbol);
 			if (symbol == ' ') count_space++;
 			if (symbol == '\n') break;
 		}
 		fin.seekg(0, ios::beg);
 		fin.clear();
+
+		ifstream file("input2.txt");		 
 		int n = count / (count_space + 1);
 		int m = count_space + 1;
 		maze = new int*[n];
-		for (int i = 0; i<n; i++) maze[i] = new int[m];
+		for (int i = 0; i < n; i++) maze[i] = new int[m];
 
 		for (int i = 0; i < n; i++)
 			for (int j = 0; j < m; j++)
-				fin >> maze[i][j];
+				file >> maze[i][j];
 
-		fin.close();
+		file.close();
 	}
 	return maze;
 }
@@ -220,7 +213,7 @@ int main()
 	while (check(*curr, maze))
 	{
 		returnMaze(maze);
-		move(check(*stack.peek(), maze), stack, *curr);
+		move(check(*stack.peek(), maze), stack, *curr, maze);		
 	}
 	returnMaze(maze);
 	cout << endl;
