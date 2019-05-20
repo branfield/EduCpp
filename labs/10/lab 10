@@ -1,45 +1,94 @@
 #include <iostream>
 #include <fstream>
+#include <cstring> 
+
 using namespace std;
 
 int main()
 {
-	char buff[255];
 	setlocale(0, "");
 	ifstream fin;
 	fin.open("file.txt");
-	int *odd = new int[255]; //нечетные
-	int *even = new int[255]; //четные
+	char* buffer = new char[256];
 	if (fin)
 	{
-		while (!fin.eof())
+		fin.getline(buffer, 256);
+
+		int *arr = new int[strlen(buffer)];
+		int  j = 0;
+		char* tmp = new char[256];
+		for (int i = 0, s = 0; i < strlen(buffer) + 1; i++)
 		{
-			fin.getline(buff, 255);
-			char* tmp = buff;
-			int *mas = new int[50];
-			for (int i = 0; i < 50; i++)
+			if (buffer[i] != ' ')
 			{
-				int a = atoi(tmp);
-				for (int i = 0; i < 255; i++)
-				{
-					if (a % 2 == 0) odd[i] = a;
-					else even[i] = a;
-				}
+				tmp[s] = buffer[i];
+				s++;
+			}
+			else
+				tmp[s] = '\0';
+			if (buffer[i] == ' ' || buffer[i] == '\0')
+			{
+				arr[j] = atoi(tmp);
+				j++;
+				tmp = new char[256];
+				s = 0;
 			}
 		}
+		cout << "Вывод исходного массива: ";
+		for (int i = 0; i < j; i++)
+		{
+			cout << arr[i] << " ";
+		}
+		cout << endl;
+		int *even = new int[strlen(buffer)];
+		int *odd = new int[strlen(buffer)];
+		int f = 0, g = 0;
+		for (int i = 0; i < j; i++)
+		{
+			if (arr[i] % 2 == 0)
+			{
+				even[f] = arr[i];
+				f++;
+			}
+			else
+			{
+				odd[g] = arr[i];
+				g++;
+			}
+		}
+		cout << "Массив четных чисел: ";
+		for (int i = 0; i < f; i++)
+		{
+			cout << even[i] << " ";
+		}
+		cout << endl;
+		cout << "Массив нечетных чисел: ";
+		for (int i = 0; i < g; i++)
+		{
+			cout << odd[i] << " ";
+		}
+		cout << endl;
+		int max = 0;
+		for (int i = 0; i < f; i++)
+		{
+			if (even[i] > max)
+			{
+				max = even[i];
+			}
+		}
+		cout << "Максимальный четный элемент: " << max << endl;
+		int min = 999999;
+		for (int i = 0; i < g; i++)
+		{
+			if (odd[i] < min)
+			{
+				min = odd[i];
+			}
+		}
+		cout << "Минимальный нечетный элемент: " << min << endl;
 		fin.close();
 	}
-	else cout << "Файл не существует" << endl;
-
-	for (int i = 0; i < 255; i++)
-	{
-		cout << odd[i] << " ";
-	}
-
-	for (int i = 0; i < 255; i++)
-	{
-		cout << even[i] << " ";
-	}
+	else cout << "Файл не найден!" << endl;
 	system("pause");
 	return 0;
 }
