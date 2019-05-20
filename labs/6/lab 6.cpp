@@ -4,31 +4,51 @@ using namespace std;
 int main()
 {
 	setlocale(0, "");
-	int n;
-	cout << "Ââåäèòå ðàçìåðíîñòü ìàññèâà: ";
+	int n=0;
+	cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ñ€Ð°Ð·Ð¼ÐµÑ€Ð½Ð¾ÑÑ‚ÑŒ Ð¼Ð°ÑÑÐ¸Ð²Ð°: ";
 	cin >> n;
-	int *mas = new int[n];
+	int *Z = new int[n];
 
 	for (int i = 0; i < n; i++)
 	{
-		cin >> mas[i];
+		cin >> Z[i];
 	}
 
-	int max = mas[0];
-	int min = mas[0];
-
+	int max = Z[0];
+	int min = Z[0];
+	int k = 0, m = 0;
 	for (int i = 0; i < n; i++)
 	{
-		if (mas[i] > max) max = mas[i];
-		if (mas[i] < min) min = mas[i];
+		if (Z[i] > max)
+		{
+			max = Z[i];
+			k = i;
+		}
+		if (Z[i] < min)
+		{
+			min = Z[i];
+			m = i;
+		}
 	}
 
-	cout << "Ïîëó÷åííûé ìàññèâ: ";
+	for (int i = k; i < n-1; i++)
+	{
+			Z[i] = Z[i + 1]; 
+			n--;
+	}
+
+	for (int i = m; i < n-1; i++)
+	{
+		Z[i] = Z[i + 1];
+		n--;
+	}
+
+	cout << "ÐŸÐ¾Ð»ÑƒÑ‡ÐµÐ½Ð½Ñ‹Ð¹ Ð¼Ð°ÑÑÐ¸Ð²: ";
 	for (int i = 0; i < n; i++)
 	{
-		if (mas[i] == max || mas[i] == min) continue;
-		else  cout << mas[i] << " ";
+		cout << Z[i] << " ";
 	}
+
 	cout << endl;
 	system("pause");
 	return 0;
