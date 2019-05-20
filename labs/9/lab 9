@@ -1,0 +1,57 @@
+#include <iostream>
+
+using namespace std;
+int func(int *mas, int n)
+{
+	
+	int i;
+	for (i = 0; i < n; i++)
+	{
+		int count = 0;
+		for (int j = 0; j < n; j++)
+		{
+			if (mas[i] == mas[j])
+			{
+				count++;
+			}
+		}
+		if (count > 2)
+		{
+			return i;
+		}
+	}
+
+}
+int main()
+{
+	setlocale(0, "");
+	int n = 0;
+	cin >> n;
+	int *mas = new int[n];
+
+	for (int i = 0; i < n; i++)
+	{
+		cin >> mas[i];
+	}
+	for (int j = 0; j < n; j++)
+	{
+		if (func(mas, n) != n)
+		{
+			for (int i = func(mas, n); i < n; i++)
+			{
+				mas[i] = mas[i + 1];
+			}
+			n--;
+		}
+	}
+	
+
+
+	for (int i = 0; i < n; i++)
+	{
+		cout << mas[i] << " ";
+	}
+	cout << endl;
+	system("pause");
+	return 0;
+}
