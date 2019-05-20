@@ -1,39 +1,42 @@
 #include<iostream>
 using namespace std;
 
-int *repet(int *mas, int n)
-{
-	int k = 0;
-	for (int i = 0; i < n; i++)
-	{
-		for (int j = 0; j < n; j++)
-		{
-			if (mas[i] == mas[j]) k++;
-		}
-		if (k > 2)
-		{
-			for (int j = 0; j < n; j++)
-			{
-				mas[i] = mas[i + 1];
-				i++;
-			}
-			n--;
-		}
-	}
-}
-
 int main()
 {
 	setlocale(0, "");
 	int n;
-	cout << "������� ����������� �������: ";
+	cout << "Введите размерность массива A: ";
 	cin >> n;
-	int *mas = new int[n];
+	int *A = new int[n];
+	int k = 0;
 
 	for (int i = 0; i < n; i++)
 	{
-		cin >> mas[i];
+		cin >> A[i];
+		if (A[i] % 2 == 0) k++;
 	}
+
+	int *B = new int[k];
+	int sum = 0;
+
+	for (int i = 0, j = 0; i < n; i++)
+	{
+		if (A[i] % 2 == 0)
+		{
+			B[j] = A[i];
+			j++;
+		}
+		else sum += A[i];
+	}
+
+	cout << "Массив B: "; 
+
+	for (int i = 0; i < k; i++)
+	{
+		cout << B[i] << " ";
+	}
+
+	cout << endl << "Сумма нечетных элементов массива A: " << sum << endl;
 
 	system("pause");
 	return 0;
