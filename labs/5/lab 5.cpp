@@ -1,34 +1,30 @@
-#include<iostream>
+#include <iostream>
 using namespace std;
 
 int main()
 {
 	setlocale(0, "");
-	int n;
-	cout << "������� ����������� �������: ";
+	int *mas = new int;
+	cout << "Введите размерность массива: ";
+	int n = 0;
 	cin >> n;
-	int *mas = new int[n];
-
+	cout << "Введите массив: ";
 	for (int i = 0; i < n; i++)
 	{
 		cin >> mas[i];
 	}
-
-	int max = mas[0];
-	int min = mas[0];
-
+	int count = 0;
 	for (int i = 0; i < n; i++)
 	{
-		if (mas[i] > max) max = mas[i];
-		if (mas[i] < min) min = mas[i];
+		if (mas[i] < mas[i + 1]) count++;
+		else
+		{
+			count = 0; 
+			break;
+		}
 	}
-
-	cout << "���������� ������: ";
-	for (int i = 0; i < n; i++)
-	{
-		if (mas[i] == max || mas[i] == min) continue;
-		else  cout << mas[i] << " "; 
-	}
-	system ("pause");
+	if (count == 0) cout << "Последовательность не является возрастающей!" << endl;
+	else cout << "Последовательность является возрастающей!" << endl;
+	system("pause");
 	return 0;
 }
