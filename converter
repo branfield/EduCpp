@@ -1,0 +1,117 @@
+#include<iostream>
+#include<string>
+#include<string.h>
+#include<math.h>
+using namespace std;
+
+string translatorToHex(unsigned long long a)
+{
+	int rem = 0;
+	double ned = 0;
+	int *mas = new int[12];
+	int j = 0;
+	while(a > 0)
+	{
+		ned = floor( a / 16);
+		rem = a - (ned * 16);
+		a = ned;
+		mas[j] = rem;
+		j++;
+	}
+	string hex = "";
+	for (int i = j-1; i >= 0; i--)
+	{
+		if (mas[i] < 10) hex += to_string(mas[i]);
+		else if (mas[i] >= 10 && mas[i] < 16) 
+			switch (mas[i])
+			{
+			case 10: hex += "A";
+				break;
+			case 11: hex += "B";
+				break;
+			case 12: hex += "C";
+				break;
+			case 13: hex += "D";
+				break;
+			case 14: hex += "E";
+				break;
+			case 15: hex += "F";
+				break;
+			}
+	}
+	return hex;
+}
+
+string translatorToBin(unsigned long long a) 
+{
+	int rem = 0;
+	double ned = 0;
+	int *mas = new int[50];
+	int j = 0;
+	while (a > 0)
+	{
+		ned = floor(a / 2);
+		rem = a - (ned * 2);
+		a = ned;
+		mas[j] = rem;
+		j++;
+	}
+	string bin = "";
+	for (int i = j - 1; i >= 0; i--)
+	{
+		bin += to_string(mas[i]);
+	}
+	return bin;
+}
+
+char crc8(string kod) //рассчет контрольной суммы *не работаетъ*
+{
+	char n, crc, temp, bayt;
+	crc = 0;
+	for (n = 0; n < 8; n++)
+	{
+		bayt = kod[n];
+		for (temp = 8; temp--;)
+		{
+			if ((crc^bayt) & 0x01) 
+				crc = (crc >> 1) ^ 0x8c; 
+			else crc >>= 1; 
+				bayt >>= 1; 
+		}
+	}
+	return crc; 
+}
+
+int main()
+{
+	unsigned long long dec;
+	setlocale(0, "");
+	cout << "Исходное число: ";
+	cin >> dec;
+	int bite2 = 0, bite3 = 0;
+	bite3 = dec % 100000;
+	bite2 = (dec / 100000) % 1000;
+	cout << "Без первого байта: " << bite2 << bite3 << endl;
+	string hex;
+	hex = translatorToHex(bite2)+translatorToHex(bite3);
+
+	string bin;
+	bin = translatorToBin(dec);
+	cout << "Бинарный вид: " << bin << endl;
+
+	while (hex.length() < 8) 
+	{
+		hex = "0" + hex;
+	}
+
+	cout << "Шестнадцатиричная система: " << hex << endl; 
+	string code;
+	char crc;
+	crc = crc8(bin);
+	cout << "Контрольная сумма: " << (int)crc << endl;
+	//нужно найти первые XX, все остальное забить нулями до 16 символов.
+	//XX - контрольная сумма по алгоритму CRC8
+	code = hex + "01";
+	cout << "Полученный код: " << code << endl;
+	system("pause");
+}
