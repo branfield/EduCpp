@@ -43,6 +43,42 @@ string translatorToHex(unsigned long long a)
 	return hex;
 }
 
+string translatorToBin(unsigned long long a) 
+{
+	int rem = 0;
+	double ned = 0;
+	int *mas = new int[50];
+	int j = 0;
+	while (a > 0)
+	{
+		ned = floor(a / 2);
+		rem = a - (ned * 2);
+		a = ned;
+		mas[j] = rem;
+		j++;
+	}
+	string bin = "";
+	for (int i = j - 1; i >= 0; i--)
+	{
+		bin += to_string(mas[i]);
+	}
+	return bin;
+}
+
+string translatorToDec(unsigned long long a)
+{
+	int b = 0, i = 0, dec = 0;
+	while (a)
+	{
+		b = a%10;
+		dec += b*pow(2,i);
+		i++;
+	}
+	string dec1;
+	dec1 = to_string(dec);	
+	return dec1;
+}
+
 unsigned long long crc8(string s)
 {
 	int r = 0x00;
@@ -77,6 +113,8 @@ int main()
 	int bite2 = 0, bite3 = 0;
 	bite3 = dec % 100000;
 	bite2 = (dec / 100000) % 1000;
+	unsigned long long dec2 = 0;
+	dec2 = bite2*100000+bite3;
 	string dec1;
 	dec1 = to_string(bite2) + to_string(bite3);	
 	cout << "Без первого байта: " << dec1 << endl;
@@ -90,12 +128,26 @@ int main()
 
 	cout << "Шестнадцатиричная система: " << hex << endl; 
 	string code;
+
+	string bin;
+	bin = translatorToBin(dec2);
+
 	int crc;
-	unsigned long long crc1;
-	crc = crc8(dec1);
-	cr1 = translatorToHex((unsigned long long)crc);
-	cout << "Контрольная сумма: " << crc1 << endl;
-	code = crc1 + hex + "01"; 
+	string crc1, crc2;
+	crc = crc8(bin);
+	crc1 = translatorToDec((unsigned long long)crc);
+	crc2 = translatorToHex((unsigned long long)atoi(crc1.c_str()));
+
+	cout << "Контрольная сумма: " << crc2 << endl;
+
+	code = crc2;
+	
+	while (code.length()<6)
+	{
+		code += "0";
+	}
+
+	code += hex + "01";
 	cout << "Полученный код: " << code << endl;
 	system("pause");
 }
