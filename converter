@@ -72,6 +72,7 @@ string translatorToDec(unsigned long long a)
 	{
 		b = a%10;
 		dec += b*pow(2,i);
+		a /= 10;
 		i++;
 	}
 	string dec1;
