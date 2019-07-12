@@ -1,0 +1,61 @@
+#include<iostream>
+#include<string>
+#include<string.h>
+#include<math.h>
+#include<stdlib.h>
+using namespace std;
+
+string translatorToBin(unsigned long long a) 
+{
+	int rem = 0;
+	double ned = 0;
+	int *mas = new int[50];
+	int j = 0;
+	while (a > 0)
+	{
+		ned = floor(a / 2);
+		rem = a - (ned * 2);
+		a = ned;
+		mas[j] = rem;
+		j++;
+	}
+	string bin = "";
+	for (int i = j - 1; i >= 0; i--)
+	{
+		bin += to_string(mas[i]);
+	}
+	return bin;
+}
+
+unsigned long long retranslator (string a, int value)
+{
+	unsigned long long b = 0;
+	 b = atoll(a.c_str());
+	// b = strtoll(a.c_str(), 0, 10);
+	//b = stoll(a);
+	int lastNumber, i = 0;
+	unsigned long long sum = 0;
+	while (b)
+	{
+		lastNumber = b%10;
+		sum += lastNumber*pow(value, i);
+		i++;
+		b/=10;
+	}
+	return sum;
+}
+
+int main()
+{ 
+	setlocale(0,"");
+	unsigned long long a = 1234567;	
+	cout << "Исходное число: " << a << endl;
+	string d;
+	d = translatorToBin(a);
+	cout << "Двоичное число: " << d << endl;
+	unsigned long long b = 0;
+	b = retranslator(d,2);
+	cout << "Возврат к исходной форме: " << b << endl;	 
+	system("pause");
+	return 0; 
+}
