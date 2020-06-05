@@ -36,7 +36,7 @@ string to_bin(int a, int q)
 	return bin;
 }
 
-void check(h, p)
+int check(int h, int p)
 {
 	int a;
 	for (int i = 0; h > 0; i++)
@@ -44,11 +44,13 @@ void check(h, p)
 		a = h % 10;
 		if (a >= p)
 		{
-			cout << "Число не подходит под рамки системы счисления!" << endl;
-			break;
+			cout << "Число нарушает правила заданной системы счисления!" << endl;
+			system("pause");
+			exit(0);
 		}
 		else h = h / 10;
 	}
+	return 0;
 }
 
 
@@ -59,7 +61,7 @@ int main()
 	int p1, p2;
 	cout << "Введите первое число и его основание системы счисления: ";
 	cin >> h1 >> p1;
-	if (p1 > 16 || p1==7 || p1 == 9 || p1 == 11 || p1 == 13 || p1 == 14 || p1 == 15)
+	if (p1 > 16 || p1 == 7 || p1 == 9 || p1 == 11 || p1 == 13 || p1 == 14 || p1 == 15)
 	{
 		cout << "Ошибка при вводе системы счисления." << endl;
 		system("pause");
@@ -68,7 +70,7 @@ int main()
 	check(h1, p1);
 	cout << "Введите второе число и его основание системы счисления: ";
 	cin >> h2 >> p2;
-		if (p2 > 16 || p2 == 7 || p2 == 9 || p2 == 11 || p2 == 13 || p2 == 14 || p2 == 15)
+	if (p2 > 16 || p2 == 7 || p2 == 9 || p2 == 11 || p2 == 13 || p2 == 14 || p2 == 15)
 	{
 		cout << "Ошибка при вводе системы счисления." << endl;
 		system("pause");
@@ -76,14 +78,14 @@ int main()
 	}
 	check(h2, p2);
 	int sum = 0;
-	sum = to_hex(h1, p1)+ to_hex(h2, p2);
+	sum = to_hex(h1, p1) + to_hex(h2, p2);
 	cout << "Сумма в";
 	switch (p1)
 	{
 	case 2:
 		cout << " двоичном ";
 		break;
-	case 3: 
+	case 3:
 		cout << " троичном ";
 		break;
 	case 4:
