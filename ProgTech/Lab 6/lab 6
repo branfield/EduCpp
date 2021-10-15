@@ -1,0 +1,134 @@
+#include<iostream>
+using namespace std;
+
+struct List
+{
+	int x;
+	List *right;
+	List *left;
+};
+
+List *add(int x, List *temp)
+{
+	if (temp == NULL)
+	{
+		temp = new List;
+		temp->x = x;
+		temp->left = NULL;
+		temp->right = NULL;
+	}
+	else
+	{
+		if (x < temp->x) temp->left = add(x, temp->left);
+		else temp->right = add(x, temp->right);
+	}
+	return temp;
+}
+
+List *searchOfMax(List *temp)
+{
+	if (temp->right == NULL)
+	{
+		return temp;
+	}
+	else
+	{
+		return searchOfMax(temp->right);
+	}
+}
+
+List *clear(int x, List *temp, int &y)
+{
+	if (temp != NULL)
+	{
+		if (x == temp->x)
+		{
+			List *tmp = NULL;
+			if (temp->left == NULL && temp->right == NULL)
+			{
+				tmp = temp;
+				temp = NULL;
+				delete tmp;
+			}
+			else
+			{
+				if (temp->left == NULL)
+				{
+					tmp = temp;
+					temp = temp->right;
+					delete tmp;
+				}
+				else
+				{
+					if (temp->right == NULL)
+					{
+						tmp = temp;
+						temp = temp->left;
+						delete tmp;
+					}
+					else
+					{
+						List *tmp = NULL;
+						tmp = searchOfMax(temp->left);
+						temp->x = tmp->x;
+						tmp = NULL;
+					}
+				}
+			}
+		}
+		else
+		{
+			y++;
+			if (x < temp->x)
+			{
+				temp->left = clear(x, temp->left, y);
+			}
+			else
+			{
+				temp->right = clear(x, temp->right, y);
+			}
+		}
+	}
+	else
+	{
+		cout << "Узел не найден" << endl;
+	}
+	return temp;
+}
+
+void output(List *temp)
+{
+	if (temp != NULL)
+	{
+		output(temp->left);
+		cout << temp->x << endl;
+		output(temp->right);
+	}
+}
+
+int main()
+{
+	setlocale(0, "");
+	int x = 0;
+	List *temp = NULL;
+	for (int i = 1; i < 12; i++)
+	{
+		while (true)
+		{
+			cout << "Введите значение: ";
+			cin >> x;
+			if (x < 0) cout << "Введено отрицательное значение, повторите ввод!" << endl;
+			else break;
+		}
+		temp = add(x, temp);
+	}
+
+	int y = 0;
+	cout << "Введите значение узла, который Вы хотите удалить: ";
+	cin >> x;
+	temp = clear(x, temp, y);
+	output(temp);
+
+	system("pause");
+	return 0;
+}
